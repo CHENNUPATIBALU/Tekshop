@@ -28,7 +28,7 @@ public class ProductEntry extends HttpServlet{
 			ped = new ProductEntryDAO(prodName, longDesc, "", "AppBel", "", category, category, "",Integer.parseInt(perUnitPrice), Integer.parseInt(invLvl), "",0,"");
 			ped.addProduct();
 			PrintWriter out = res.getWriter();
-			out.write("<script>alert('Success');</script>");
+			out.write("<script>alert('Product added.'); window.location.href = 'product-entry.html';</script>");
 					
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
