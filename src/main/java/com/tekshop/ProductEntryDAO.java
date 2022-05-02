@@ -44,7 +44,7 @@ public class ProductEntryDAO {
 		ProductEntryDAO.productSubCategory = productSubCategory;
 		ProductEntryDAO.productUnit = productUnit;
 		ProductEntryDAO.unitPrice = unitPrice;
-		ProductEntryDAO.makeConnection("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/tekshop", "root", "b@/uv!n@y7474");
+		ProductEntryDAO.makeConnection(DAO.driverType, DAO.url, DAO.userName, DAO.password);
 	}
 	
 	public static void makeConnection(String driverType, String driverUrl, String userName, String password) throws Exception {
@@ -74,6 +74,9 @@ public class ProductEntryDAO {
 		ps.setString(13, inventoryThreshold+"");
 		ps.setString(14, "");
 		ps.execute();
+		
+		con.close();
+		ps.close();
 	}
 	
 	public static String getGeneratedProductId() {
