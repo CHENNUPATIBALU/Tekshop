@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Entry</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+    	body{
+		    background-image: url('https://www.lucintel.com/assets/images/industry-banner.jpg');
+		    background-size: 100%;
+		}
+		
+		.product-entry-form{
+		    width: max-content;
+		    margin: 0 auto;
+		    background-color: rgb(255, 255, 255);
+		    box-shadow: grey 2px 1px 8px 2px;
+		    border-radius: 5px;
+		    padding-left: 20px;
+		    padding-right: 20px;
+		    padding-bottom: 20px;
+		}
+		
+		#error-div{
+		    width: max-content;
+		    margin: 0 auto;
+		    background-color: rgb(247, 102, 102);
+		    display: none;
+		}
+		
+		#error-div a{
+		    float: right;
+		    font-weight: bold;
+		    text-decoration: none;
+		    cursor: pointer;
+		}
+		
+		#error-div p{
+		    text-align: center;
+		    color: aliceblue;
+		    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		}
+		
+		td span{
+		    color: red;
+		    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+		    font-size: small;
+		}
+		
+		.checked{
+		    color: green;
+		    font-size: larger;
+		    font-weight: bold;
+		    display: block;
+		}
+		
+		.unchecked{
+		    display: none;
+		}
+		
+		button{
+		    margin: 0 auto;
+		    display: block;
+		    border-radius: 5px;
+		    border: 0.5px solid grey;
+		    background-color: rgb(187, 142, 83);
+		    color: whitesmoke;
+		    cursor: pointer;
+		    padding: 10px;
+		}
+		
+		input,textarea{
+		    height: 30px;
+		    width: max-content;
+		    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		    font-size: small;
+		}
+		
+		input[type=date]{
+		    height: 30px;
+		    width: max-content;
+		    cursor: pointer;
+		}
+		
+		select{
+		    height: 30px;
+		    width: max-content;
+		    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		    font-size: small;
+		    cursor: pointer;
+		}
+		
+		td p{
+		    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+		    text-align: center;
+		    padding: 5px;
+		}
+		
+		caption{
+		    font-family: Arial, Helvetica, sans-serif;
+		}
+		
+		input[type=radio]{
+		    height: 11px;
+		    cursor: pointer;
+		}
+    	
+    </style>
+</head>
+<body>
+    <div class="product-entry-form">
+        <form action="addProductEntry" method="post">
+            <table>
+                <caption><h1>Product Entry</h1></caption>
+                <tr>
+                    <td>
+                        <p>Product Category</p>
+                    </td>
+                    <td>
+                        <select id="category-select" name="category">
+                            <option value="Apparel & Accessories">Apparel & Accessories</option>
+                            <option value="Style & Fashion">Style & Fashion</option>
+                            <option value="Home & Garden">Home & Garden</option>
+                            <option value="Sporting Goods">Sporting Goods</option>
+                            <option value="Health & Wellness">Health & Wellness</option>
+                            <option value="Children & Infants">Children & Infants</option>
+                            <option value="Groceries, Food and Drinks">Groceries, Food and Drinks</option>
+                            <option value="Flowers and Gifts">Flowers and Gifts</option>
+                        </select>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Product name</p></td>
+                    <td>
+                        <input type="text" id="product-name" name="prod-name"><i id="name-val-check" class="check unchecked">&check;</i><br>
+                        <span id="name-val-span"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Date of availability</p></td>
+                    <td>
+                        <input type="date" id="product-availability-date" name="doa"><i id="date-val-check" class="check unchecked">&check;</i><br>
+                        <span id="date-val-span"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Inventory level</p></td>
+                    <td>
+                        <input type="number" id="inventory-level" name="inv-lvl"><i id="inventory-val-check" class="check unchecked">&check;</i><br>
+                        <span id="inventory-val-span"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Short description</p></td>
+                    <td>
+                        <input type="text" id="short-desc" name="short-desc"><i id="short-desc-val-check" class="check unchecked">&check;</i><br>
+                        <span id="short-desc-val-span"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Long description</p></td>
+                    <td>
+                        <textarea id="long-desc" name="long-desc"></textarea><i id="long-desc-val-check" class="check unchecked">&check;</i><br>
+                        <span id="long-desc-val-span"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Per unit price</p></td>
+                    <td>
+                        <input type="number" id="per-unit-price" name="per-unit-price"><i id="price-val-check" class="check unchecked">&check;</i><br>
+                        <span id="unit-price-val-span"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Discount Percentage</p></td>
+                    <td>
+                        <div><br><input type="range" min="0" max="100" id="discount-percentage" value="0" name="dis-range"><span id="discount-p"></span></div><i id="discount-val-check" class="check unchecked">&check;</i><br>
+                        <span id="discount-val-span"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Active Flag</p></td>
+                    <td>
+                        <input type="radio" id="yes-radio" name="y-radio" value="Y">Y
+                        <input type="radio" id="no-radio" name="n-radio" value="N">N&nbsp;<i id="flag-val-check" class="check unchecked">&check;</i><br>
+                        <span id="active-flag-val-span"></span>
+                    </td>
+                </tr>
+            </table>
+            <div id="error-div">
+                <a href="#" onclick="closeError();">&#10005;</a>
+                <p id="error-p"></p>
+            </div>
+            <br>
+            <button id="add-product-btn" type="submit" onclick="checkInputs(event);">Add Product</button>
+        </form>
+    </div>
+</body>
+<script>
+	var categorySelect = document.getElementById('category-select');
+	var productName = document.getElementById('product-name');
+	var dateAvailability = document.getElementById('product-availability-date');
+	var inventory = document.getElementById('inventory-level');
+	var shortDesc = document.getElementById('short-desc');
+	var longDesc = document.getElementById('long-desc');
+	var unitPrice = document.getElementById('per-unit-price');
+	var discountPercentage = document.getElementById('discount-percentage');
+	var flagY = document.getElementById('yes-radio');
+	var flagN = document.getElementById('no-radio');
+	
+	var nameSpan = document.getElementById('name-val-span');
+	var dateSpan = document.getElementById('date-val-span');
+	var inventorySpan = document.getElementById('inventory-val-span');
+	var shortDescSpan = document.getElementById('short-desc-val-span');
+	var longDescSpan = document.getElementById('long-desc-val-span');
+	var unitPriceSpan = document.getElementById('unit-price-val-span');
+	var discountSpan = document.getElementById('discount-val-span');
+	
+	productName.addEventListener('change',function(){
+	    if(productName.value==""){
+	        nameSpan.innerText = "Enter product name";
+	        document.getElementById('name-val-check').classList.replace('checked','unchecked');
+	    }else{
+	        nameSpan.innerText = "";
+	        document.getElementById('name-val-check').classList.replace('unchecked','checked');
+	    }
+	});
+	
+	dateAvailability.addEventListener('change',function(){
+	    if(dateAvailability.value==""){
+	        dateSpan.innerText = "Select the date of availability";
+	        document.getElementById('date-val-check').classList.replace('checked','unchecked');
+	    }else{
+	        dateSpan.innerText = "";
+	        document.getElementById('date-val-check').classList.replace('unchecked','checked');
+	    }
+	});
+	
+	inventory.addEventListener('change',function(){
+	    if(inventory.value==""){
+	        inventorySpan.innerText = "Enter the inventory";
+	        document.getElementById('inventory-val-check').classList.replace('checked','unchecked');
+	    }else{
+	        inventorySpan.innerText = "";
+	        document.getElementById('inventory-val-check').classList.replace('unchecked','checked');
+	    }
+	});
+	
+	shortDesc.addEventListener('change',function(){
+	    if(shortDesc.value==""){
+	        shortDescSpan.innerText = "Enter short description";
+	        document.getElementById('short-desc-val-check').classList.replace('checked','unchecked');
+	    }else{
+	        shortDescSpan.innerText = "";
+	        document.getElementById('short-desc-val-check').classList.replace('unchecked','checked');
+	    }
+	});
+	
+	longDesc.addEventListener('change',function(){
+	    if(longDesc.value==""){
+	        longDescSpan.innerText = "Enter long description";
+	        document.getElementById('long-desc-val-check').classList.replace('checked','unchecked');
+	    }else{
+	        longDescSpan.innerText = "";
+	        document.getElementById('long-desc-val-check').classList.replace('unchecked','checked');
+	    }
+	});
+	
+	unitPrice.addEventListener('change',function(){
+	    if(unitPrice.value==""){
+	        unitPriceSpan.innerText = "Enter price per unit";
+	        document.getElementById('price-val-check').classList.replace('checked','unchecked');
+	    }else{
+	        unitPriceSpan.innerText = "";
+	        document.getElementById('price-val-check').classList.replace('unchecked','checked');
+	    }
+	});
+	
+	discountPercentage.addEventListener('change',function(){
+	    if(discountPercentage.value==""){
+	        discountSpan.innerText = "Enter discount in %";
+	        document.getElementById('discount-val-check').classList.replace('checked','unchecked');
+	    }else{
+	        discountSpan.innerText = "";
+	        document.getElementById('discount-p').innerText = discountPercentage.value+"%";
+	        document.getElementById('discount-val-check').classList.replace('unchecked','checked');
+	    }
+	});
+	
+	flagY.addEventListener('click',function(){
+	    flagN.checked = false;
+	});
+	
+	flagN.addEventListener('click',function(){
+	    flagY.checked = false;
+	});
+	
+	function checkInputs(event){
+	    var category = categorySelect.value;
+	    var product = productName.value;
+	    var availability = dateAvailability.value;
+	    var inventoryLevel = inventory.value;
+	    var shortDescription = shortDesc.value;
+	    var longDescription = longDesc.value;
+	    var perUnitPrice = unitPrice.value;
+	    var discount = discountPercentage.value;
+	    var error = "";
+	    var errorDiv = document.getElementById('error-div');
+	    var errorP = document.getElementById('error-p');
+	    
+	    if(product==""){
+	        error += "&#10021; Enter the product name<br>";
+	        event.preventDefault();
+	    }
+	    if(inventoryLevel==""){
+	        error += "&#10021; Enter the inventory level<br>";
+	        event.preventDefault();
+	    }
+	    if(shortDescription==""){
+	        error += "&#10021; Enter the short description<br>";
+	        event.preventDefault();
+	    }
+	    if(longDescription==""){
+	        error += "&#10021; Enter the long description<br>";
+	        event.preventDefault();
+	    }
+	    if(perUnitPrice==""){
+	        error += "&#10021; Enter the price of product per unit<br>";
+	        event.preventDefault();
+	    }
+	    if(discount==""){
+	        error += "&#10021; Enter the discount in %<br>";
+	        event.preventDefault();
+	    }
+
+	    if(error==""){
+	        if(flagY.checked){
+	            activeFlag = "Yes";
+	        }else{
+	            activeFlag = "No";
+	        }
+	        storeProduct(category,product,availability,inventoryLevel,shortDescription,longDescription,perUnitPrice,discount,activeFlag);
+	        error = "";
+	        event.defaultPrevented();
+	    }else{
+	        errorP.innerHTML = error;
+	        errorDiv.style.display = "block";
+	        event.preventDefault();
+	    }
+	}
+
+	function closeError(){
+	    document.getElementById('error-div').style.display = 'none';
+	}
+</script>
+</html>
