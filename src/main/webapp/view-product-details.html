@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Product</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+    	#prod_name{
+		    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		    font-size: x-large;
+		}
+		
+		#prod_price{
+		    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		    font-size: xx-large;
+		}
+		
+		#short_desc_span,#long_desc_span{
+		    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		    font-size: small;
+		}
+		
+		.headings-b{
+		    font-family: cursive;
+		    font-weight: bold;
+		}
+    </style>
+</head>
+<body>
+    <div>
+        <img id="prod_img" src="" width="740" height="500" alt="">
+        <p><b class="headings-b" id="prod_name"></b></p>
+        <p><b class="headings-b">Price: </b><span id="prod_price"></span></p>
+        <p><b class="headings-b">Short Description</b><br>&nbsp;&nbsp;&nbsp;<span id="short_desc_span"></span></p>
+        <p><b class="headings-b">Long Description</b><br>&nbsp;&nbsp;&nbsp;<span id="long_desc_span"></span></p>
+    </div>
+</body>
+<script>
+
+    function showProduct(productCategory,productName,productUnitPrice,productShortDesc,productLongDesc){
+        document.getElementById("prod_img").src = getProductImage(productCategory);
+        document.getElementById("prod_name").innerHTML = productName;
+        document.getElementById("prod_price").innerHTML = "₹ "+productUnitPrice+"/-";
+        document.getElementById("short_desc_span").innerHTML = productShortDesc;
+        document.getElementById("long_desc_span").innerHTML = productLongDesc;
+    }
+
+    function getProductImage(category){
+        imagePath = "";
+        switch (category) {
+            case "Apparels & Accessories":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/apparels-accessories_uc5o8e.jpg";
+                break;
+            case "Style & Fashion":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/style-fashion_zghqmi.jpg";
+                break;
+            case "Home & Garden":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/home-garden_qizt5h.jpg";
+                break;
+            case "Sporting Goods":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/sport-goods_bwx7ct.jpg";
+                break;
+            case "Health & Wellness":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/health-wellness_nnms3f.png";
+                break;
+            case "Children & Infants":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494687/Tekshop/children-infant_x7vls8.png";
+                break;
+            case "Groceries, Food and Drinks":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/groceries_h5drlm.jpg";
+                break;
+            case "Flowers and Gifts":
+                imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/flower-gift_zvrgvp.jpg";
+                break;
+            default:
+                break;
+        }
+        return imagePath;
+    }
+</script>
+</html>

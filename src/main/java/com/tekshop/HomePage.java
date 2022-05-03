@@ -149,19 +149,6 @@ public class HomePage extends HttpServlet {
 					+ "	    }\r\n"
 					+ "	});\r\n"
 					+ "	\r\n"
-					+ "	function populateProducts(){\r\n"
-					+ "	    products = getProducts();\r\n"
-					+ "	    if(products.length>0){\r\n"
-					+ "	        for(let i=0;i<products.length;i++){\r\n"
-					+ "	            product = JSON.parse(products[i]);\r\n"
-					+ "	            var option = document.createElement('option');\r\n"
-					+ "	            option.value = product.Product_Name;\r\n"
-					+ "	            document.getElementById(\"products-list\").appendChild(option);\r\n"
-					+ "	            populateProduct(product.Category,product.Product_Name,product.Unit_Price,product.Active_Flag);\r\n"
-					+ "	        }\r\n"
-					+ "	    }\r\n"
-					+ "	}\r\n"
-					+ "	\r\n"
 					+ "	function populateProduct(category,prod_name,prod_price){\r\n"
 					+ "	        document.getElementById(\"root-div\").style.display = \"flex\";\r\n"
 					+ "	    if(true){\r\n"
@@ -229,7 +216,7 @@ public class HomePage extends HttpServlet {
 					+ "	        div.appendChild(div1);\r\n"
 					+ "	\r\n"
 					+ "	        view_details_btn.addEventListener('click',function(){\r\n"
-					+ "	            window.open(\"view-product-details.html?product=\"+prod_name+\"&category=\"+category,\"_blank\",\"width:200px,height:200px\");\r\n"
+					+ "	            window.open(\"view-product-details.html?Product=\"+prod_name,\"_blank\",\"width:200px,height:200px\");\r\n"
 					+ "	        });\r\n"
 					+ "	\r\n"
 					+ "	        purchase_btn.addEventListener('click',function(){\r\n"
@@ -322,7 +309,7 @@ public class HomePage extends HttpServlet {
 					+ "</script>\r\n"
 					+ "</html>");
 			for(HashMap<String,String> map: products) {
-				out.append("<script>console.log('Success');populateProduct('"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"',);</script>");
+				out.append("<script>populateProduct('"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"',);</script>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

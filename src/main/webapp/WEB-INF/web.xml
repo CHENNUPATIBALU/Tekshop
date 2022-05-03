@@ -8,6 +8,7 @@
     <servlet-name>ProductEntry</servlet-name>
     <url-pattern>/addProductEntry</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>HomePage</display-name>
@@ -17,5 +18,23 @@
   <servlet-mapping>
     <servlet-name>HomePage</servlet-name>
     <url-pattern>/index.html</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ViewProduct</servlet-name>
+  	<servlet-class>com.tekshop.ViewProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewProduct</servlet-name>
+  	<url-pattern>/view-product-details.html</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ProductUpdate</servlet-name>
+  	<servlet-class>com.tekshop.ProductUpdate</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ProductUpdate</servlet-name>
+  	<url-pattern>/productUpdate</url-pattern>
   </servlet-mapping>
 </web-app>
