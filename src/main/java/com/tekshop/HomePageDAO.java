@@ -35,6 +35,7 @@ public class HomePageDAO {
 			map.put("Product_Price_Currency", rs.getString(12));
 			map.put("Product_Inventory_Threshold", rs.getString(13));
 			map.put("Product_Image", rs.getString(14));
+			map.put("ActiveFlag",rs.getBoolean(15)+"");
 			
 			products.add(map);
 		}

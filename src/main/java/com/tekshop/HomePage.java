@@ -230,28 +230,28 @@ public class HomePage extends HttpServlet {
 					+ "	function getProductImage(category){\r\n"
 					+ "	    imagePath = \"\";\r\n"
 					+ "	    switch (category) {\r\n"
-					+ "	        case \"Apparels & Accessories\":\r\n"
+					+ "	        case \"Apparels_Accessories\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/apparels-accessories_uc5o8e.jpg\";\r\n"
 					+ "            break;\r\n"
-					+ "        case \"Style & Fashion\":\r\n"
+					+ "        case \"Style_Fashion\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/style-fashion_zghqmi.jpg\";\r\n"
 					+ "            break;\r\n"
-					+ "        case \"Home & Garden\":\r\n"
+					+ "        case \"Home_Garden\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/home-garden_qizt5h.jpg\";\r\n"
 					+ "            break;\r\n"
-					+ "        case \"Sporting Goods\":\r\n"
+					+ "        case \"Sporting_Goods\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/sport-goods_bwx7ct.jpg\";\r\n"
 					+ "            break;\r\n"
-					+ "        case \"Health & Wellness\":\r\n"
+					+ "        case \"Health_Wellness\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/health-wellness_nnms3f.png\";\r\n"
 					+ "            break;\r\n"
-					+ "        case \"Children & Infants\":\r\n"
+					+ "        case \"Children_Infants\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494687/Tekshop/children-infant_x7vls8.png\";\r\n"
 					+ "            break;\r\n"
-					+ "        case \"Groceries, Food and Drinks\":\r\n"
+					+ "        case \"Groceries_Food_Drinks\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/groceries_h5drlm.jpg\";\r\n"
 					+ "            break;\r\n"
-					+ "        case \"Flowers and Gifts\":\r\n"
+					+ "        case \"Flowers_Gifts\":\r\n"
 					+ "            imagePath = \"https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/flower-gift_zvrgvp.jpg\";\r\n"
 					+ "            break;\r\n"
 					+ "	        default:\r\n"
@@ -309,7 +309,10 @@ public class HomePage extends HttpServlet {
 					+ "</script>\r\n"
 					+ "</html>");
 			for(HashMap<String,String> map: products) {
+				System.out.println(map.get("ActiveFlag")+","+Boolean.parseBoolean(map.get("ActiveFlag")));
+				if(Boolean.parseBoolean(map.get("ActiveFlag"))==true) {
 				out.append("<script>populateProduct('"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"',);</script>");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
