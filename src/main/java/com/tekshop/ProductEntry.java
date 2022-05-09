@@ -20,12 +20,17 @@ public class ProductEntry extends HttpServlet{
 		String longDesc = req.getParameter("long-desc");
 		String perUnitPrice = req.getParameter("per-unit-price");
 		String discount = req.getParameter("dis-range");
-		String yesRadio = req.getParameter("y-radio");
-		String noRadio = req.getParameter("n-radio");
+		String activeYes = req.getParameter("y-radio");
+		String activeNo = req.getParameter("n-radio");
+		boolean active = false;
+		
+		if(activeYes!=null) {
+			active = true;
+		}
 		
 		ProductEntryDAO ped;
 		try {
-			ped = new ProductEntryDAO(prodName, longDesc, "", "AppBel", "", category, category, "",Integer.parseInt(perUnitPrice), Integer.parseInt(invLvl), "",0,"");
+			ped = new ProductEntryDAO(prodName, longDesc, "", "AppBel", "", category, category, "",Integer.parseInt(perUnitPrice), Integer.parseInt(invLvl), "",0,"",active);
 			ped.addProduct();
 			PrintWriter out = res.getWriter();
 			out.write("<script>alert('Product added.'); window.location.href = 'product-entry.html';</script>");

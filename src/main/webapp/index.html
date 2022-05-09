@@ -69,6 +69,10 @@
 		    border: none;
 		}
 		
+		#login-form{
+			
+		}
+		
 		input[type=range]{
 		    width: 100%;
 		}
@@ -77,13 +81,29 @@
 </head>
 
 <body>
+	<!--<div id="login-div">-->
+        <!--<form action="login" method="post" id="login-form">-->
+            <!--<input type="email" placeholder="Email*" name="email" required>-->
+            <!--<input type="password" placeholder="Password*" name="password" required>-->
+            <!--<input type="submit">-->
+        </form>
+    </div>-->
     <div id="top-div">
-        <h1>TekShop</h1>
+        <div>
+            <div onclick="openCart()" style="float: right; margin: 15px; cursor: pointer;">
+                <i class="fa fa-shopping-cart" style="color:rgb(120, 118, 224); font-size: xx-large;"></i>
+            </div>
+            <h1>TekShop</h1>
+        </div>
         <div id="search-div">
             <input list="products-list" type="search" placeholder="Search" id="search-input">
             <datalist id="products-list"></datalist>
             <button id="search-btn"><i class="fa fa-search"></i></button>
         </div>
+    </div>
+    <div id="message-div" style="display: none; border: 3px solid rgb(103, 208, 103); border-radius: 5px; background-color: rgb(208, 245, 233); margin: 5px;
+    padding: 10px; text-align: center;">
+        <p><i>&check;&nbsp;</i><span id="message-span" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;"> Added to cart</span></p>
     </div>
     <div class="root-div" id="root-div">
         <div id="sort-filter-div">
@@ -117,7 +137,6 @@
     </div>
 </body>
 <script>
-	populateProducts();
 	
 	document.getElementById("price-range").addEventListener('change',function(){
 	    filterProducts("price");
@@ -130,22 +149,13 @@
 	    }
 	});
 	
-	function populateProducts(){
-	    products = getProducts();
-	    if(products.length>0){
-	        document.getElementById("root-div").style.display = "flex";
-	        for(let i=0;i<products.length;i++){
-	            product = JSON.parse(products[i]);
-	            var option = document.createElement('option');
-	            option.value = product.Product_Name;
-	            document.getElementById("products-list").appendChild(option);
-	            populateProduct(product.Category,product.Product_Name,product.Unit_Price,product.Active_Flag);
-	        }
-	    }
+	function openCart(){
+	    window.location.href = "cart.html";
 	}
 	
-	function populateProduct(category,prod_name,prod_price,active){
-	    if(active=="Yes"){
+	function populateProduct(category,prod_name,prod_price){
+		document.getElementById('root-div').style.display = 'flex';
+	    if(true){
 	        var div = document.createElement('div');
 	        div.style = "border: 0.1px solid rgb(230, 206, 206); border-radius:5px; width: max-content; margin: 5px; padding: 10px; background-color:white;";
 	
@@ -200,9 +210,14 @@
 	
 	        purchase_btn.appendChild(purchase_icon);
 	        purchase_btn.style.cursor = "pointer";
-	
+	        purchase_btn.name = "product"
+
+	        var purchaseForm = document.createElement('form');
+	        purchaseForm.setAttribute('action','AddCart');
+	        purchaseForm.appendChild(purchase_btn);
+
 	        div1.appendChild(view_details_btn);
-	        div1.appendChild(purchase_btn);
+	        div1.appendChild(purchaseForm);
 	
 	        div.appendChild(img);
 	        div.appendChild(p);
@@ -224,29 +239,29 @@
 	function getProductImage(category){
 	    imagePath = "";
 	    switch (category) {
-	        case "Apparels & Accessories":
-	            imagePath = "./Images/apparels-accessories.jpg";
+	        case "Apparels_Accessories":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/apparels-accessories_uc5o8e.jpg";
 	            break;
-	        case "Style & Fashion":
-	            imagePath = "./Images/style-fashion.jpg";
+	        case "Style_Fashion":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/style-fashion_zghqmi.jpg";
 	            break;
-	        case "Home & Garden":
-	            imagePath = "./Images/home-garden.jpg";
+	        case "Home_Garden":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/home-garden_qizt5h.jpg";
 	            break;
-	        case "Sporting Goods":
-	            imagePath = "./Images/sport-goods.jpg";
+	        case "Sporting_Goods":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/sport-goods_bwx7ct.jpg";
 	            break;
-	        case "Health & Wellness":
-	            imagePath = "./Images/health-wellness.png";
+	        case "Health_Wellness":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/health-wellness_nnms3f.png";
 	            break;
-	        case "Children & Infants":
-	            imagePath = "./Images/children-infant.png";
+	        case "Children_Infants":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494687/Tekshop/children-infant_x7vls8.png";
 	            break;
-	        case "Groceries, Food and Drinks":
-	            imagePath = "./Images/groceries.jpg";
+	        case "Groceries_Food_Drinks":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/groceries_h5drlm.jpg";
 	            break;
-	        case "Flowers and Gifts":
-	            imagePath = "./Images/flower-gift.jpg";
+	        case "Flowers_Gifts":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/flower-gift_zvrgvp.jpg";
 	            break;
 	        default:
 	            break;

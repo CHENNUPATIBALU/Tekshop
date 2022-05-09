@@ -38,4 +38,13 @@
   	<url-pattern>/product-update.html</url-pattern>
   	<url-pattern>/ProductUpdate</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>AddCart</servlet-name>
+  	<servlet-class>com.tekshop.AddCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AddCart</servlet-name>
+  	<url-pattern>/AddCart</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -2,8 +2,11 @@ package com.tekshop;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,10 +43,22 @@ public class HomePageDAO {
 			products.add(map);
 		}
 		
-		con.close();
-		st.close();
-		
 		return products;
+	}
+	
+	public static void addToCart(String productID) throws SQLException {
+		String query = "insert into cart_table values(?,?,?,?,?)";
+		PreparedStatement ps = con.prepareStatement(query);
+		Timestamp cartTimeStamp = new Timestamp(System.currentTimeMillis());
+		String cartId = String.format("c_%s%s%s", cartTimeStamp.getHours(),cartTimeStamp.getMinutes(),cartTimeStamp.getSeconds());
+		int selectedUnits = 1;
+		String customerID = "cus_123";
+		ps.setString(1, cartId);
+		ps.setString(2, cartTimeStamp+"");
+		ps.setString(3, productID);
+		ps.setInt(4, selectedUnits);
+		ps.setString(5, customerID);
+		ps.execute();
 	}
 	
 	public static void makeConnection(String driverType, String driverUrl, String userName, String password) throws Exception {
