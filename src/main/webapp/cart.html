@@ -1,10 +1,214 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Checkout</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-
+    <div>
+        <div id="no-items-div" style="display: none; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-large;">
+            No Items in the cart :-)
+        </div>
+        <div id="items-main-div">
+            <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Checkout</h2>
+            <div id="items-root-div">
+                <div style="border: 0.5px solid grey; border-radius: 5px; box-shadow: 1px 0.5px 1px 0.5px grey; width: inherit; margin: 5px; display: flex;">
+                    <img src="Images/flower-gift.jpg" alt="prod_img" style="width: 150px; height: 150px;">
+                    <div style="width: max-content;">
+                        <p><b style="font-family: Arial, Helvetica, sans-serif;">Product Name</b></p>
+                        <p><i style="font-family: Verdana, Geneva, Tahoma, sans-serif; color: rgb(113, 208, 113);">Price</i></p>
+                        <p style="height: 20px">
+                            <div>
+                                <button style="background-color: white; border: 0.2px solid grey; padding: 5px; cursor: pointer;"><i class="fa fa-minus"></i></button>
+                                <span style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">1</span>
+                                <button style="background-color: white; border: 0.2px solid grey; padding: 5px; cursor: pointer;"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </p>
+                    </div>
+                    <div style="margin-left: auto; height: max-content;">
+                        <button style="float: right; background-color: red; border: 0.2px solid red; border-top-right-radius: 5px; cursor: pointer;"><i style="color: white;" class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div id="bill-div" style="display: none; background-color: aquamarine; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin: 5px; border: 1px solid grey; border-radius: 5px;">
+                <p style="text-align: center; font-size: x-large;"><span><b>Total Bill: </b></span><span id="bill-span"></span></p>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    totalBill = parseInt('0');
+    function populateCart(prod_id,category,imgSrc,prod_name,prod_price,prod_quantity){
+        bill=0;
+        var mainDiv = document.createElement('div');
+        mainDiv.style = "border: 0.5px solid grey; border-radius: 5px; box-shadow: 1px 0.5px 1px 0.5px grey; width: inherit; margin: 5px; display: flex;";
+
+        var img = document.createElement('img');
+        img.src = getProductImage(category);
+        img.style = "width: 150px; height: 150px; margin: 5px;";
+        img.alt = prod_name+"_img";
+
+        mainDiv.appendChild(img);
+
+        var prodDiv = document.createElement('div');
+
+        var nameP = document.createElement('p');
+        var nameB = document.createElement('b');
+        nameB.style = "font-family: Arial, Helvetica, sans-serif;";
+        nameB.innerText = prod_name;
+        nameP.appendChild(nameB);
+
+        var priceP = document.createElement('p');
+        var priceI = document.createElement('i');
+        priceI.innerText = "₹ "+prod_price+"/-";
+        priceI.style = "font-family: Verdana, Geneva, Tahoma, sans-serif; color: rgb(113, 208, 113);";
+        priceP.appendChild(priceI);
+
+        prodDiv.appendChild(nameP);
+        prodDiv.appendChild(priceP);
+        bill+=parseInt(prod_price)*prod_quantity;
+        totalBill+=bill;
+        priceI.innerText = "₹ "+bill+"/-";
+        document.getElementById('bill-span').innerText = '₹ '+totalBill+'/-';
+
+        var quantityP = document.createElement('p');
+        quantityP.style = "height: 20px;";
+        var quantityDiv = document.createElement('div');
+        var minusBtn = document.createElement('button');
+        minusBtn.style = "background-color: white; border: 0.2px solid grey; padding: 5px; cursor: pointer;";
+        var plusBtn = document.createElement('button');
+        plusBtn.style = "background-color: white; border: 0.2px solid grey; padding: 5px; cursor: pointer;";
+        var quantitySpan = document.createElement('span');
+        quantitySpan.style = "margin: 4px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;";
+        quantitySpan.innerText = prod_quantity;
+
+        var minusI = document.createElement('i');
+        var plusI = document.createElement('i');
+
+        minusI.classList.add("fa");
+        minusI.classList.add("fa-minus");
+        plusI.classList.add("fa");
+        plusI.classList.add("fa-plus");
+
+        minusBtn.setAttribute('type','submit');
+        plusBtn.setAttribute('type','submit');
+
+        var quantityForm = document.createElement('form');
+        quantityForm.setAttribute('action','UpdateQuantity');
+        var quantityInput = document.createElement('input');
+        quantityInput.setAttribute('type','hidden');
+        quantityInput.name = 'quantity';
+        quantityInput.value = prod_quantity;
+
+        var quantityProduct = document.createElement('input');
+        quantityProduct.setAttribute('type','hidden');
+        quantityProduct.name = 'product';
+        quantityProduct.value = prod_id;
+
+        quantityForm.appendChild(quantityProduct);
+        quantityForm.appendChild(quantityInput);
+        quantityForm.appendChild(minusBtn);
+        quantityForm.appendChild(quantitySpan);
+        quantityForm.appendChild(plusBtn);
+
+        minusBtn.addEventListener('click',function(){
+            var value = parseInt(quantitySpan.innerText);
+            if(value>1){
+                quantitySpan.innerText = parseInt(quantitySpan.innerText)-1;
+                prod_quantity--;
+                bill = prod_price*prod_quantity;
+                priceI.innerText = "₹ "+bill+"/-";
+                totalBill-=parseInt(prod_price);
+                quantityInput.value = prod_quantity;
+                document.getElementById('bill-span').innerText = '₹ '+totalBill+'/-';
+            }
+        });
+
+        plusBtn.addEventListener('click',function(){
+            quantitySpan.innerText = parseInt(quantitySpan.innerText)+1;
+            prod_quantity++;
+            bill = prod_price*prod_quantity;
+            priceI.innerText = "₹ "+bill+"/-";
+            totalBill+=parseInt(prod_price);
+            quantityInput.value = prod_quantity;
+            document.getElementById('bill-span').innerText = '₹ '+totalBill+'/-';
+        });
+
+        minusBtn.appendChild(minusI);
+        plusBtn.appendChild(plusI);
+
+        quantityDiv.appendChild(quantityForm);
+
+        quantityP.appendChild(quantityDiv);
+
+        prodDiv.appendChild(quantityP);
+
+        var delDiv = document.createElement('div');
+        delDiv.style = "margin-left: auto; height: max-content;";
+        var delBtn = document.createElement('button');
+        delBtn.style = "float: right; background-color: red; border: 0.2px solid red; border-top-right-radius: 5px; cursor: pointer;";
+        var delI = document.createElement('i');
+        delI.classList.add('fa');
+        delI.classList.add('fa-trash');
+        delI.style = "color: white;";
+
+        delBtn.appendChild(delI);
+        
+        var delForm = document.createElement('form');
+		delForm.setAttribute('action','DeleteProduct');
+		
+		var delInput = document.createElement('input');
+		delInput.setAttribute('type','hidden');
+		delInput.value = prod_id;
+		delInput.name = 'product';
+		
+		delBtn.setAttribute('type','submit');
+		
+		delForm.appendChild(delInput);
+		delForm.appendChild(delBtn);
+		
+		delDiv.appendChild(delForm);
+
+        mainDiv.appendChild(prodDiv);
+        mainDiv.appendChild(delDiv);
+
+        document.getElementById('items-root-div').appendChild(mainDiv);
+    }
+    
+    function getProductImage(category){
+	    imagePath = "";
+	    switch (category) {
+	        case "Apparels_Accessories":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/apparels-accessories_uc5o8e.jpg";
+	            break;
+	        case "Style_Fashion":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/style-fashion_zghqmi.jpg";
+	            break;
+	        case "Home_Garden":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/home-garden_qizt5h.jpg";
+	            break;
+	        case "Sporting_Goods":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494689/Tekshop/sport-goods_bwx7ct.jpg";
+	            break;
+	        case "Health_Wellness":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/health-wellness_nnms3f.png";
+	            break;
+	        case "Children_Infants":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494687/Tekshop/children-infant_x7vls8.png";
+	            break;
+	        case "Groceries_Food_Drinks":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/groceries_h5drlm.jpg";
+	            break;
+	        case "Flowers_Gifts":
+	            imagePath = "https://res.cloudinary.com/chennupati-balu/image/upload/v1651494688/Tekshop/flower-gift_zvrgvp.jpg";
+	            break;
+	        default:
+	            break;
+	    }
+	    return imagePath;
+	}
+</script>
 </html>

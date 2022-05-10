@@ -78,7 +78,7 @@ public class ProductUpdate extends HttpServlet{
 				+ "    </div>\r\n"
 				+ "    <br><br>"
 				+ "		<div id=\"form-div\" style=\"border: 0.5px solid grey; width: max-content; margin: 0 auto; display: none;\">\r\n"
-				+ "        <form action=\"ProductUpdate\" style=\"padding: 10px;width: max-content; margin: 0 auto;\" id=\"update-form\">\r\n"
+				+ "        <form action=\"ProductUpdate\" style=\"padding: 10px;width: max-content; margin: 0 auto;\" id=\"update-form\" method=\"post\">\r\n"
 				+ "            <h2 style=\"text-align: center; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\">Update</h2>\r\n"
 				+ "            <span>Product ID: </span><input type=\"text\" name=\"prod_id\" id=\"prod_id\"><br><br>\r\n"
 				+ "            <span>Product Name: </span><input type=\"text\" name=\"prod_name\" id=\"prod_input\"><br><br>\r\n"

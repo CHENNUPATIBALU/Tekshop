@@ -18,11 +18,11 @@ public class ViewProduct extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String productName = req.getParameter("Product");
+		String productId = req.getParameter("ProductID");
 		
 		ResultSet rs;
 		try {
-			rs = ViewProductDAO.getProduct(productName);
+			rs = ViewProductDAO.getProduct(productId);
 			
 			PrintWriter out = res.getWriter();
 			res.setContentType("text/html");
@@ -119,8 +119,8 @@ public class ViewProduct extends HttpServlet{
 
 class ViewProductDAO{
 	
-	static ResultSet getProduct(String productName) throws SQLException, ClassNotFoundException{
-		String query = "select product_category,product_name,product_unit_price,product_description from products where product_name='"+productName+"'";
+	static ResultSet getProduct(String productId) throws SQLException, ClassNotFoundException{
+		String query = "select product_category,product_name,product_unit_price,product_description,product_id from products where product_id='"+productId+"'";
 		
 		Class.forName(DAO.driverType);
 		Connection con = DriverManager.getConnection(DAO.url, DAO.userName, DAO.password);

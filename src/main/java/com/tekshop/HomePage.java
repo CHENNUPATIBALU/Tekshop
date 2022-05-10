@@ -250,7 +250,7 @@ public class HomePage extends HttpServlet {
 					+ "	        div.appendChild(div1);\r\n"
 					+ "	\r\n"
 					+ "	        view_details_btn.addEventListener('click',function(){\r\n"
-					+ "	            window.open(\"view-product-details.html?Product=\"+prod_name,\"_blank\",\"width:200px,height:200px\");\r\n"
+					+ "	            window.open(\"view-product-details.html?ProductID=\"+prod_id,\"_blank\",\"width:200px,height:200px\");\r\n"
 					+ "	        });\r\n"
 					+ "	\r\n"
 					+ "	        purchaseForm.addEventListener('onsubmit',function(){\r\n"
