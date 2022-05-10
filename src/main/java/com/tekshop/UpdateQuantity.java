@@ -20,7 +20,7 @@ public class UpdateQuantity extends HttpServlet {
 		try {
 			 dao = new CartDAO();
 			 dao.updateQuantity(productID,quantity);
-			 out.write("<script>window.location.href = 'cart.html'</script>");
+			 out.write("<script>window.location.href = 'cart'</script>");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -28,7 +28,7 @@ public class Cart extends HttpServlet {
 				+ "<body>\r\n"
 				+ "    <div>\r\n"
 				+ "        <div id=\"no-items-div\" style=\"display: none; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-large;\">\r\n"
-				+ "            No Items in the cart :-)\r\n"
+				+ "            No Items in the cart &#128521;\r\n"
 				+ "        </div>\r\n"
 				+ "        <div id=\"items-main-div\">\r\n"
 				+ "            <h2 style=\"font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;\">Checkout</h2>\r\n"
@@ -215,13 +215,16 @@ public class Cart extends HttpServlet {
 				CartDAO dao = new CartDAO();
 				cartItems = CartDAO.cartItems();
 				Iterator<HashMap<String, String>> listIterator = cartItems.iterator();
-				while(listIterator.hasNext()) {
-					HashMap<String, String> item = listIterator.next();
-					out.append("<script>document.getElementById('no-items-div').style.display = 'none'; document.getElementById('bill-div').style.display='block'; populateCart('"+item.get("ProductID")+"','"+item.get("ProductCategory")+"','','"+item.get("ProductName")+"','"+item.get("ProductPrice")+"','"+item.get("SelectedUnits")+"');</script>");
+				if(listIterator.hasNext()) {
+					while(listIterator.hasNext()) {
+						HashMap<String, String> item = listIterator.next();
+						out.append("<script>document.getElementById('no-items-div').style.display = 'none'; document.getElementById('bill-div').style.display='block'; populateCart('"+item.get("ProductID")+"','"+item.get("ProductCategory")+"','','"+item.get("ProductName")+"','"+item.get("ProductPrice")+"','"+item.get("SelectedUnits")+"');</script>");
+					}
+				}else {
+					out.write("<script>document.getElementById('no-items-div').style.display = 'block'; document.getElementById('items-main-div').style.display = 'none';</script>");
 				}
 			} catch (SQLException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
-				out.write("<script>document.getElementById('no-items-div').style.display = 'block'; document.getElementById('items-main-div').style.display = 'none';</script>");
 				e.printStackTrace();
 			}
 	}

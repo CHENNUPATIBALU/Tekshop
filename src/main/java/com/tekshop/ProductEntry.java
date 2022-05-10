@@ -30,7 +30,7 @@ public class ProductEntry extends HttpServlet{
 		
 		ProductEntryDAO ped;
 		try {
-			ped = new ProductEntryDAO(prodName, longDesc, "", "AppBel", "", category, category, "",Integer.parseInt(perUnitPrice), Integer.parseInt(invLvl), "",0,"",active);
+			ped = new ProductEntryDAO(prodName, longDesc, "", "balu123", "", category, category, "",Integer.parseInt(perUnitPrice), Integer.parseInt(invLvl), "",0,"",active);
 			ped.addProduct();
 			PrintWriter out = res.getWriter();
 			out.write("<script>alert('Product added.'); window.location.href = 'product-entry.html';</script>");

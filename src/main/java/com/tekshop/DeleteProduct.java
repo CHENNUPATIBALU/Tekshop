@@ -19,7 +19,7 @@ public class DeleteProduct extends HttpServlet {
 		try {
 			 dao = new CartDAO();
 			 CartDAO.deleteCartItem(productID);
-			 out.write("<script>window.location.href = 'cart.html'</script>");
+			 out.write("<script>window.location.href = 'cart'</script>");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

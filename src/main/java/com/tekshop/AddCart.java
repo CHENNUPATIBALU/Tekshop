@@ -16,7 +16,7 @@ public class AddCart extends HttpServlet{
 		try {
 			HomePageDAO.addToCart(productId);
 			PrintWriter out = res.getWriter();
-			out.write("<script>alert('Product added to cart'); window.location.href = 'index.html';</script>");
+			out.write("<script>alert('Product added to cart'); window.location.href = 'home';</script>");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
