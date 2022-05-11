@@ -70,11 +70,31 @@
     <url-pattern>/UpdateQuantity</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>Checkout</servlet-name>
+    <servlet-name>Checkout</servlet-name>
     <servlet-class>com.tekshop.Checkout</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Checkout</servlet-name>
     <url-pattern>/Checkout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CardPayment</display-name>
+    <servlet-name>CardPayment</servlet-name>
+    <servlet-class>com.tekshop.CardPayment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CardPayment</servlet-name>
+    <url-pattern>/CardPayment</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpiPayment</display-name>
+    <servlet-name>UpiPayment</servlet-name>
+    <servlet-class>com.tekshop.UpiPayment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpiPayment</servlet-name>
+    <url-pattern>/UpiPayment</url-pattern>
   </servlet-mapping>
 </web-app>
