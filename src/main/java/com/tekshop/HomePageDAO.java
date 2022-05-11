@@ -61,6 +61,15 @@ public class HomePageDAO {
 		ps.execute();
 	}
 	
+	public static int countCartItems() throws SQLException {
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("select count(*) from cart_table");
+		while(rs.next()) {
+			return rs.getInt(1);
+		}
+		return 0;
+	}
+	
 	public static void makeConnection(String driverType, String driverUrl, String userName, String password) throws Exception {
 		Class.forName(driverType);
 		con = DriverManager.getConnection(driverUrl,userName,password);
