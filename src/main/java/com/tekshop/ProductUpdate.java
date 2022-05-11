@@ -157,7 +157,7 @@ public class ProductUpdate extends HttpServlet{
 				+ "            priceB.innerText = \"Price: \";\r\n"
 				+ "            priceP.appendChild(priceB);\r\n"
 				+ "            var priceSpan = document.createElement('span');\r\n"
-				+ "            priceSpan.innerText = price;\r\n"
+				+ "            priceSpan.innerText = \"₹ \"+price+\"/-\";\r\n"
 				+ "            priceP.appendChild(priceSpan);\r\n"
 				+ "\r\n"
 				+ "            var invP = document.createElement('p');\r\n"

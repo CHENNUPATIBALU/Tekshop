@@ -261,7 +261,7 @@ public class HomePage extends HttpServlet {
 					+ "	    }\r\n"
 					+ "	}\r\n"
 					+ "	\r\n"
-					+ "	function getProductImage(category){\r\n"
+					+ "    function getProductImage(category){\r\n"
 					+ "	    imagePath = \"\";\r\n"
 					+ "	    switch (category) {\r\n"
 					+ "	        case \"Apparels_Accessories\":\r\n"

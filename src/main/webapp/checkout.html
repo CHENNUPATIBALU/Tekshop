@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        span b, p b{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        h2{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        #card-no-div{
+            width: max-content;
+        }
+        .card-input{
+            width: inherit;
+            height: 33px;
+            border-right: none;
+            border: 0.5px solid black;
+            border-radius: 3px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+        #cvv, #upi-id{
+            width: inherit;
+            height: 33px;
+            border: 0.5px solid grey;
+            border-radius: 3px;
+        }
+        #card-icon-btn{
+            height: 36px;
+            border: 0.5px solid black;
+            border-radius: 3px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+        #card-btn{
+            border: 2px solid #2a6dff;
+            padding: 10px;
+            border-bottom: none;
+            border-radius: 5px;
+            border-bottom-right-radius: 0px;
+            cursor: pointer;
+            background-color: white;
+            box-shadow: 0px 0px 1px 2px #8098ff;
+        }
+        #upi-btn{
+            padding: 10px;
+            border: 1px solid grey;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 5px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            cursor: pointer;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="total-bill-div" style="background-color: rgb(247, 235, 217); border: 0.5px solid grey; border-radius: 5px; margin: 5px; padding-left: 5px;">
+        <p><b style="font-size: large;">Total Bill: </b><span id="total-bill-span" style="font-size: x-large;"></span></p>
+    </div>
+    <div id="payment-div" style="background-color: beige; border: 0.5px solid grey; border-radius: 5px; margin: 5px;">
+        <h2 style="text-align: center;">Select Payment method</h2>
+        <div style="width: max-content; margin: 0 auto; display: block; border-bottom: 2px solid #2a6dff; border-radius: 8px;">
+            <button id="card-btn" onclick="openCard();"><i class="fa fa-credit-card" style="width: 50px; height: 20px; font-size: x-large;"></i></button>
+            <button id="upi-btn" onclick="openUpi();"><img src="https://www.vectorlogo.zone/logos/upi/upi-ar21.svg" style="width: 50px; height: 23px;"></button>
+        </div>
+        <br>
+        <div style="width: max-content; margin: 0 auto; display: block; text-align: center;" id="card-div">
+            <form action="CardPayment" method="post">
+                <span><b>CARD NUMBER</b></span>
+                <div id="card-no-div" style="width: max-content; margin: 0 auto; display: block;">
+                <input type="tel" id="card-number" class="card-input" name="card-no" maxlength="18"><button disabled id="card-icon-btn"><i id="card-type-icon" class="fa fa-credit-card"></i></button> 
+                </div><br>
+                <table>
+                    <tr>
+                        <td>
+                        <span><b>EXPIRY DATE</b></span><br>
+                        <input type="month" name="expiry" id="expiry-date" style="height: 33px;">
+                        </td>
+                        <td>
+                            <span><b>CVV</b></span><br>
+                            <input type="tel" minlength="3" maxlength="4" id="cvv" name="cvv">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <button type="submit" style="margin: 5px; padding: 8px; background-color: #2a6dff; color: white; border: 0.5px solid #5582ff; border-radius: 5px; box-shadow: 1px 1px 1px #8098ff; cursor: pointer;">Make Payment</button>
+            </form>
+        </div>
+        <div id="upi-div" style="width: max-content; margin: 0 auto; display: none; text-align: center;">
+            <form action="UpiPayment" method="post">
+                <span><b>Enter UPI ID</b></span><br>
+                <input name="upi-id" type="email" id="upi-id"><br><br>
+                <button type="submit" style="margin: 5px; padding: 8px; background-color: #2a6dff; color: white; border: 0.5px solid #5582ff; border-radius: 5px; box-shadow: 1px 1px 1px #8098ff; cursor: pointer;" id="upi-pay-btn">Verify & Pay</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    var cardNumber = document.getElementById('card-number');
+    var expiry = document.getElementById('expiry-date');
+    var cvv = document.getElementById('cvv');
+
+    cardNumber.addEventListener('keyup',function(){
+        const len = cardNumber.value.trim().length;
+        if(!(len>=15 && len<=16)){
+            cardNumber.style.borderColor = 'red';
+            cardNumber.style.borderWidth = '3px';
+        }else{
+            cardNumber.style.borderColor = 'grey';
+            cardNumber.style.borderWidth = '0.5px';
+        }
+    });
+
+    expiry.addEventListener('change',function(){
+        const expDate = expiry.value;
+        const year = expDate.split('-')[0];
+        const month = expDate.split('-')[1];
+
+        if(parseInt(year)<new Date().getFullYear()){
+            alert('Incorrect year. Year should be greater than or equal to the current year.');
+            expiry.value = '';
+        }
+        else if(parseInt(month)<new Date().getDate()){
+            alert('Incorrect month. Month should be greater than equal to current month.');
+            expiry.value = '';
+        }
+    });
+
+    cvv.addEventListener('keyup',function(){
+        const cvvNum = cvv.value;
+        if(cvvNum.length<3 || cvvNum.length==0){
+            cvv.style.border = '3px solid red';
+        }else{
+            cvv.style.border = '0.5px solid grey';
+        }
+    });
+    
+    function changePaymentMode(mode){
+        var cardBtn = document.getElementById('card-btn');
+        var upiBtn = document.getElementById('upi-btn');
+        if(mode=='card'){
+            cardBtn.style = 'border: 2px solid #2a6dff; border-bottom: none; border-radius: 5px; border-bottom-right-radius: 0px; cursor: pointer; background-color: white; box-shadow: 0px 0px 1px 2px #8098ff;';
+        
+            upiBtn.style = 'border: 1px solid grey; border-left: none; border-bottom: none; border-radius: 5px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; cursor: pointer; background-color: white;';
+        }
+        if(mode=='upi'){
+            upiBtn.style = 'border: 2px solid #2a6dff; border-bottom: none; border-radius: 5px; border-bottom-left-radius: 0px; cursor: pointer; background-color: white; box-shadow: 0px 0px 1px 2px #8098ff;';
+        
+            cardBtn.style = 'border: 1px solid grey; border-right: none; border-bottom: none; border-radius: 5px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; cursor: pointer; background-color: white;box-shadow: none;';    
+        }
+    }
+    
+    function showCardDiv(){
+        document.getElementById('card-div').style.display = 'block';
+        document.getElementById('upi-div').style.display = 'none';
+    }
+    
+    function showUpiDiv(){
+        document.getElementById('card-div').style.display = 'none';
+        document.getElementById('upi-div').style.display = 'block';
+    }
+    
+    function openUpi(){
+        changePaymentMode('upi');
+        showUpiDiv();
+    }
+    
+    function openCard(){
+        changePaymentMode('card');
+        showCardDiv();
+    }
+</script>
+</html>

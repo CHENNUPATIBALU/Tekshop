@@ -32,7 +32,7 @@
   <servlet-mapping>
     <servlet-name>ProductUpdate</servlet-name>
     <url-pattern>/product-update.html</url-pattern>
-    <url-pattern>/productUpdate</url-pattern>
+    <url-pattern>/ProductUpdate</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>AddCart</servlet-name>
@@ -68,5 +68,13 @@
   <servlet-mapping>
     <servlet-name>UpdateQuantity</servlet-name>
     <url-pattern>/UpdateQuantity</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>Checkout</servlet-name>
+    <servlet-class>com.tekshop.Checkout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Checkout</servlet-name>
+    <url-pattern>/Checkout</url-pattern>
   </servlet-mapping>
 </web-app>
