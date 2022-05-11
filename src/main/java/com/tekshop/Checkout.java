@@ -107,9 +107,9 @@ public class Checkout extends HttpServlet{
 				+ "        </div>\r\n"
 				+ "        <br>\r\n"
 				+ "        <div style=\"width: max-content; margin: 0 auto; display: block; text-align: center;\" id=\"card-div\">\r\n"
-				+ "            <form action=\"CardPayment\" id=\"card-form\" method=\"post\">\r\n"
+				+ "            <form action=\"CardPayment\" id=\"card-form\">\r\n"
 				+ "                <span><b>CARD NUMBER</b></span>\r\n"
-				+ "				   <input type='hidden' name='amount' id='amount-input'>"
+				+ "				   <input type='hidden' name='amount' id='card-amount-input'>\r\n"
 				+ "                <div id=\"card-no-div\" style=\"width: max-content; margin: 0 auto; display: block;\">\r\n"
 				+ "                <input type=\"tel\" id=\"card-number\" class=\"card-input\" name=\"card-no\" maxlength=\"18\"><button disabled id=\"card-icon-btn\"><i id=\"card-type-icon\" class=\"fa fa-credit-card\"></i></button> \r\n"
 				+ "                </div><br>\r\n"
@@ -153,7 +153,7 @@ public class Checkout extends HttpServlet{
 				+ "        <div id=\"upi-div\" style=\"width: max-content; margin: 0 auto; display: none; text-align: center;\">\r\n"
 				+ "            <form action=\"UpiPayment\" id=\"upi-form\">\r\n"
 				+ "                <span><b>Enter UPI ID</b></span><br>\r\n"
-				+ "				   <input type='hidden' name='amount' id='upi-amount-input'>"
+				+ "				   <input type='hidden' name='amount' id='upi-amount-input'>\r\n"
 				+ "                <input name=\"upi-id\" type=\"email\" id=\"upi-id\" name=\"upi-id\"><br><br>\r\n"
 				+ "				   <br>\r\n"
 				+ "        <div>\r\n"
@@ -233,7 +233,7 @@ public class Checkout extends HttpServlet{
 				+ "    function showCardDiv(){\r\n"
 				+ "        document.getElementById('card-div').style.display = 'block';\r\n"
 				+ "        document.getElementById('upi-div').style.display = 'none';\r\n"
-				+ "	   	   document.getElementById('amount-input').value="+amount+";\r\n"
+				+ "	   	   document.getElementById('card-amount-input').value="+amount+";\r\n"
 				+ "    }\r\n"
 				+ "    \r\n"
 				+ "    function showUpiDiv(){\r\n"
@@ -254,7 +254,7 @@ public class Checkout extends HttpServlet{
 				+ "</script>\r\n"
 				+ "</html>");
 		out.append("<script>document.getElementById('total-bill-span').innerText='₹ "+amount+"/-';</script>");
-//		out.append("<script>document.getElementById('card-form').onsubmit = CardPayment;</script>");
+//		out.append("<script>document.getElementById('card-form').onsubmit = CardPayment</script>");
 //		out.append("<script>document.getElementById('upi-form').onsubmit = UpiPayment;</script>");
 	}
 }
