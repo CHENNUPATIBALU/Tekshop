@@ -1,5 +1,9 @@
 package com.tekshop;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,7 +41,22 @@ public class HomePageDAO {
 			map.put("Product_Unit_Price", rs.getString(11));
 			map.put("Product_Price_Currency", rs.getString(12));
 			map.put("Product_Inventory_Threshold", rs.getString(13));
-			map.put("Product_Image", rs.getString(14));
+			Blob img = rs.getBlob(14);
+			InputStream in = img.getBinaryStream();
+			byte[] buffer = new byte[1024];
+			int length = (int) img.length();
+			OutputStream out = new OutputStream() {
+				
+				@Override
+				public void write(int b) throws IOException {
+					// TODO Auto-generated method stub
+					
+				}
+			};
+			while((length=in.read(buffer)) !=-1) {
+				out.write(buffer, 0, length);
+			}
+			map.put("Product_Image", out.toString());
 			map.put("ActiveFlag",rs.getBoolean(15)+"");
 			
 			products.add(map);

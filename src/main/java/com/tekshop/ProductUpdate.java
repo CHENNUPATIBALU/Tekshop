@@ -96,10 +96,14 @@ public class ProductUpdate extends HttpServlet{
 				+ "            <span>Unit Price: </span><input type=\"number\" name=\"price\" id=\"price-input\"><br><br>\r\n"
 				+ "            <span>Inventory Level: </span><input type=\"number\" name=\"inventory-level\" id=\"inv-input\"><br><br>\r\n"
 				+ "            <span>Active: </span><input type=\"radio\" value=\"Yes\" id=\"yes-radio\" name=\"yes-radio\"><span>Yes</span> &nbsp; <input type=\"radio\" value=\"No\" id=\"no-radio\" name=\"no-radio\"><span>No</span><br><br>\r\n"
-				+ "            <button type=\"submit\" style=\"margin: 0 auto; display: block;\" onclick=\"updateProduct();\">Update</button>\r\n"
+				+ "            <button type=\"submit\" style=\"margin: 0 auto; display: block;\"><i class=\"fa fa-refresh\" aria-hidden=\"true\"></i> Update</button><br>\r\n"
+				+ "				<form id=\"delete-form\">\r\n"
+				+ "					<input type='hidden' name='deleteProduct' id='del-product-input'>\r\n"
+				+ "			   		<button type=\"submit\" style=\"margin: 0 auto; display: block;\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i> Delete</button>\r\n"
+				+ "				</form>\r\n"
 				+ "        </form>\r\n"
 				+ "    </div>\r\n"
-				+ "    <div id=\"root-div\" style=\"display: flex;\">\r\n"
+				+ "    <div id=\"root-div\" style=\"display: flex; flex-wrap: wrap;\">\r\n"
 				+ "    </div>\r\n"
 				+ "\r\n"
 				+ "    <script>\r\n"
@@ -133,6 +137,7 @@ public class ProductUpdate extends HttpServlet{
 				+ "                document.getElementById('price-input').value = price;\r\n"
 				+ "                document.getElementById('inv-input').value = invLvl;\r\n"
 				+ "                document.getElementById('prod_id').value = prod_id;\r\n"
+				+ "                document.getElementById('del-product-input').value = prod_id;\r\n"
 				+ "                \r\n"
 				+ "                if(active){\r\n"
 				+ "                    document.getElementById('yes-radio').checked = true;\r\n"
@@ -209,6 +214,7 @@ public class ProductUpdate extends HttpServlet{
 			}
 			ProductUpdateDAO productUpdateDAO = new ProductUpdateDAO(req.getParameter("prod_name"), req.getParameter("inventory-level"), req.getParameter("price"), req.getParameter("category"), active);
 			out.append("<script>document.getElementById('update-form').onsubmit = '"+productUpdateDAO.updateProduct(req.getParameter("prod_id"))+"'</script>");
+			out.append("<script>document.getElementById('delete-form').onsubmit = '"+productUpdateDAO.deleteProduct(req.getParameter("prod_id"))+"'</script>");
 			
 			Statement st1 = con.createStatement();
 			ResultSet rs1 = st1.executeQuery("select product_id,product_name,product_category,product_unit_price,product_inventory_level,active_flag from products where product_id='"+req.getParameter("search-input")+"'");

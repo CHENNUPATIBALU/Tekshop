@@ -2,7 +2,11 @@ package com.tekshop;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Blob;
 import java.sql.SQLException;
+
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,6 +26,16 @@ public class ProductEntry extends HttpServlet{
 		String discount = req.getParameter("dis-range");
 		String activeYes = req.getParameter("y-radio");
 		String activeNo = req.getParameter("n-radio");
+		Blob image = null;
+		try {
+			image = new SerialBlob(req.getParameter("prod-img").getBytes());
+		} catch (SerialException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		boolean active = false;
 		
 		if(activeYes!=null) {
@@ -30,7 +44,7 @@ public class ProductEntry extends HttpServlet{
 		
 		ProductEntryDAO ped;
 		try {
-			ped = new ProductEntryDAO(prodName, longDesc, "", "balu123", "", category, category, "",Integer.parseInt(perUnitPrice), Integer.parseInt(invLvl), "",0,"",active);
+			ped = new ProductEntryDAO(prodName, longDesc, "", "balu123", "", category, category, "",Integer.parseInt(perUnitPrice), Integer.parseInt(invLvl), "",0,image,active);
 			ped.addProduct();
 			PrintWriter out = res.getWriter();
 			out.write("<script>alert('Product added.'); window.location.href = 'product-entry.html';</script>");

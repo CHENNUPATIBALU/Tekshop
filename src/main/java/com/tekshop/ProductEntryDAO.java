@@ -17,8 +17,7 @@ public class ProductEntryDAO {
 	static int inventoryLevel;
 	static String priceCurrency;
 	static int inventoryThreshold;
-	//static Blob image;
-	static String image;
+	static Blob image;
 	static boolean active;
 	
 	public ProductEntryDAO(String productName, String productDesc, String productFeatures, 
@@ -31,7 +30,7 @@ public class ProductEntryDAO {
 							int inventoryLevel,
 							String priceCurrency,
 							int inventoryThreshold,
-							String image,
+							Blob image,
 							boolean active) throws Exception {
 		ProductEntryDAO.image = image;
 		ProductEntryDAO.inventoryLevel = inventoryLevel;
@@ -60,8 +59,7 @@ public class ProductEntryDAO {
 		productId = getGeneratedProductId();
 		String query = "insert into products values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		System.out.println(productId);
-		String values[] = {productId,productName,productDesc,productFeatures,productManufacturer,productSize,productCategory,productSubCategory,productUnit,inventoryLevel+"",unitPrice+"",priceCurrency,inventoryThreshold+"",/*String.valueOf(image.getBinaryStream())*/""};
-		PreparedStatement ps = con.prepareStatement(query, values);
+		PreparedStatement ps = con.prepareStatement(query);
 		ps.setString(1, productId);
 		ps.setString(2, productName);
 		ps.setString(3, productDesc);
@@ -75,7 +73,7 @@ public class ProductEntryDAO {
 		ps.setString(11, unitPrice+"");
 		ps.setString(12, priceCurrency);
 		ps.setString(13, inventoryThreshold+"");
-		ps.setString(14, "");
+		ps.setBlob(14, image);
 		ps.setBoolean(15, active);
 		ps.execute();
 		

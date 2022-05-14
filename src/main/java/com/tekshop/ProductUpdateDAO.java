@@ -3,6 +3,7 @@ package com.tekshop;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class ProductUpdateDAO {
 	
@@ -33,16 +34,16 @@ public class ProductUpdateDAO {
 		ps.setString(3, productPrice);
 		ps.setString(4, productCategory);
 		ps.setBoolean(5, activeFlag);
-		if(ps.execute()) {
-			con.close();
-			ps.close();
-			
-			System.out.println("Product updation success");
-		}
+		ps.execute();
 		
-		con.close();
-		ps.close();
+		return null;
+	}
+
+	public String deleteProduct(String prodId) throws SQLException {
+		String query = "delete from products where product_id='"+prodId+"'";
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.execute();
 		
-		return "Product updation failure";
+		return null;
 	}
 }

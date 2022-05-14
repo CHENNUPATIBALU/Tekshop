@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class HomePage extends HttpServlet {
 			products = hpd.getProducts();
 			PrintWriter out = res.getWriter();
 			res.setContentType("text/html");
+			new HomePageDAO();
 			out.write("<!DOCTYPE html>\r\n"
 					+ "<html>\r\n"
 					+ "\r\n"
@@ -85,17 +88,21 @@ public class HomePage extends HttpServlet {
 					+ "		    width: max-content;\r\n"
 					+ "		    margin: 5px;\r\n"
 					+ "		    padding: 10px;\r\n"
+					+ "		    padding-right: 70px;\r\n"
 					+ "		    border-radius: 5px;\r\n"
 					+ "		    box-shadow: 0.5px 1px 1px 1.32px grey;\r\n"
 					+ "		    border: none;\r\n"
 					+ "		}\r\n"
 					+ "		\r\n"
-					+ "		#login-form{\r\n"
-					+ "			\r\n"
+					+ "		#price-form{\r\n"
+					+ "			margin: 0 auto; display: block;\r\n"
 					+ "		}\r\n"
 					+ "		\r\n"
 					+ "		input[type=range]{\r\n"
-					+ "		    width: 100%;\r\n"
+					+ "		    width: max-content;\r\n"
+					+ "		}\r\n"
+					+ "		.cat-div span{\r\n"
+					+ "		    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;\r\n"
 					+ "		}\r\n"
 					+ "    </style>\r\n"
 					+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\r\n"
@@ -117,9 +124,10 @@ public class HomePage extends HttpServlet {
 					+ "            <h1>TekShop</h1>\r\n"
 					+ "        </div>\r\n"
 					+ "        <div id=\"search-div\">\r\n"
-					+ "            <input list=\"products-list\" type=\"search\" placeholder=\"Search\" id=\"search-input\">\r\n"
-					+ "            <datalist id=\"products-list\"></datalist>\r\n"
-					+ "            <button id=\"search-btn\"><i class=\"fa fa-search\"></i></button>\r\n"
+					+ "            <form id=\"search-form\">\r\n"
+					+ "                <input type=\"search\" placeholder=\"Search\" id=\"search-input\" name=\"search-input\">\r\n"
+					+ "                <button id=\"search-btn\" type=\"submit\"><i class=\"fa fa-search\"></i></button>\r\n"
+					+ "            </form>\r\n"
 					+ "        </div>\r\n"
 					+ "    </div>\r\n"
 					+ "    <div id=\"message-div\" style=\"display: none; border: 3px solid rgb(103, 208, 103); border-radius: 5px; background-color: rgb(208, 245, 233); margin: 5px;\r\n"
@@ -129,27 +137,28 @@ public class HomePage extends HttpServlet {
 					+ "    <div class=\"root-div\" id=\"root-div\">\r\n"
 					+ "        <div id=\"sort-filter-div\">\r\n"
 					+ "            <div>\r\n"
-					+ "                <p>Price range</p>\r\n"
-					+ "                <input type=\"range\" id=\"price-range\">\r\n"
-					+ "                <p></p>\r\n"
+					+ "					<form id=\"price-form\" method=\"post\">\r\n"	
+					+ "                		<p>Price range</p>\r\n"
+					+ "                		<input type=\"range\" id=\"price-range\">\r\n"
+					+ "				   		<input type=\"hidden\" id=\"price\" name=\"price-range\">\r\n"
+					+ "				   		<input type=\"hidden\" id=\"constraint\" name=\"constraint\">\r\n"
+					+ "                 </form>\r\n"
 					+ "            </div>\r\n"
-					+ "            <div>\r\n"
-					+ "                <p><b>Category:</b></p>\r\n"
-					+ "                <div>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Apparels & Accessories</span><br>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Style & Fashion</span><br>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Home & Garden</span>\r\n"
-					+ "                    <br>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Sporting Goods</span>\r\n"
-					+ "                    <br>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Health & Wellness</span>\r\n"
-					+ "                    <br>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Children & Infants</span>\r\n"
-					+ "                    <br>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Groceries, Food and Drinks</span>\r\n"
-					+ "                    <br>\r\n"
-					+ "                    <input type=\"checkbox\"><span>Flowers and Gifts</span>\r\n"
-					+ "                </div>\r\n"
+					+ "            <div class=\"cat-div\">\r\n"
+					+ "                <form id=\"cat-form\">\r\n"
+					+ "                    <p><b>Category:</b></p>\r\n"
+					+ "                    <div>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Apparels_Accessories\"><span>Apparels & Accessories</span><br>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Style_Fashion\"><span>Style & Fashion</span><br>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Home_Garden\"><span>Home & Garden</span><br>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Sporting_Goods\"><span>Sporting Goods</span><br>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Health_Wellness\"><span>Health & Wellness</span><br>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Children_Infants\"><span>Children & Infants</span><br>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Groceries_Food_Drinks\"><span>Groceries, Food and Drinks</span><br>\r\n"
+					+ "                        <input type=\"checkbox\" value=\"Flowers_Gifts\"><span>Flowers and Gifts</span>\r\n"
+					+ "                        <input type=\"hidden\" id=\"categories\" name=\"categories\">\r\n"
+					+ "                    </div>\r\n"
+					+ "                </form>\r\n"
 					+ "            </div>\r\n"
 					+ "        </div>\r\n"
 					+ "        <div id=\"products-div\">\r\n"
@@ -159,9 +168,39 @@ public class HomePage extends HttpServlet {
 					+ "</body>\r\n"
 					+ "<script>\r\n"
 					+ "	\r\n"
+					+ " var categories = document.querySelectorAll(\"input[type=checkbox]\");\r\n"
+					+ "\r\n"
+					+ "    var category = [];\r\n"
+					+ "    \r\n"
+					+ "    for(let cat=0;cat<categories.length;cat++){\r\n"
+					+ "        categories[cat].addEventListener('change',function(){\r\n"
+					+ "            if(this.checked){\r\n"
+					+ "                category.push(categories[cat].value);\r\n"
+					+ "				   document.getElementById('categories').value = category;\r\n"
+					+ "				   document.getElementById('cat-form').submit();"
+					+ "            }else{\r\n"
+					+ "                for(let i=0;i<category.length;i++){\r\n"
+					+ "                    if(category[i]==categories[cat].value){\r\n"
+					+ "                        delete category[i];\r\n"
+					+ "				   		   document.getElementById('categories').value = category;\r\n"
+					+ "                    }\r\n"
+					+ "                }\r\n"
+					+ "            }\r\n"
+					+ "        });\r\n"
+					+ "    }"
 					+ "	document.getElementById(\"price-range\").addEventListener('change',function(){\r\n"
-					+ "	    filterProducts(\"price\");\r\n"
+					+ "	    document.getElementById('price').value = document.getElementById('price-range').value;\r\n"
+					+ "		document.getElementById('price-form').submit();\r\n"
 					+ "	});\r\n"
+					+ "\r\n"
+					+ " document.getElementById('price-form').onsubmit = function(e){"
+					+ "		document.getElementById('products-div').innerHTML = '';\r\n"
+					+ "};\r\n"
+					+ "	\r\n"
+					+ "\r\n"
+					+ " document.getElementById('cat-form').onsubmit = function(e){"
+					+ "		document.getElementById('products-div').innerHTML = '';\r\n"
+					+ "};\r\n"
 					+ "	\r\n"
 					+ "	document.getElementById(\"search-btn\").addEventListener('click',function(){\r\n"
 					+ "	    var searchInput = document.getElementById('search-input').value;\r\n"
@@ -174,7 +213,7 @@ public class HomePage extends HttpServlet {
 					+ "	    window.location.href = \"cart.html\";\r\n"
 					+ "	}\r\n"
 					+ "	\r\n"
-					+ "	function populateProduct(prod_id,category,prod_name,prod_price){\r\n"
+					+ "	function populateProduct(prod_id,image,category,prod_name,prod_price){\r\n"
 					+ "		document.getElementById('root-div').style.display = 'flex';\r\n"
 					+ "	    if(true){\r\n"
 					+ "	        var div = document.createElement('div');\r\n"
@@ -262,7 +301,7 @@ public class HomePage extends HttpServlet {
 					+ "	    }\r\n"
 					+ "	}\r\n"
 					+ "	\r\n"
-					+ "		document.getElementById('cart-count').innerText = '"+new HomePageDAO().countCartItems()+"';\r\n"
+					+ "		document.getElementById('cart-count').innerText = '"+HomePageDAO.countCartItems()+"';\r\n"
 					+ " \r\n"
 					+ "    function getProductImage(category){\r\n"
 					+ "	    imagePath = \"\";\r\n"
@@ -297,57 +336,82 @@ public class HomePage extends HttpServlet {
 					+ "	    return imagePath;\r\n"
 					+ "	}\r\n"
 					+ "	\r\n"
-					+ "	function filterProducts(filter){\r\n"
-					+ "	    switch (filter) {\r\n"
-					+ "	        case \"price\":\r\n"
-					+ "	            filterByPrice(document.getElementById(\"price-range\").value);\r\n"
-					+ "	            break;\r\n"
-					+ "	    \r\n"
-					+ "	        default:\r\n"
-					+ "	            break;\r\n"
-					+ "	    }\r\n"
-					+ "	}\r\n"
 					+ "	\r\n"
-					+ "	function filterByPrice(price){\r\n"
+					+ "	function filterByPrice(){\r\n"
 					+ "	    var productsDiv = document.getElementById(\"products-div\");\r\n"
 					+ "	    productsDiv.innerHTML = \"\";\r\n"
-					+ "	\r\n"
-					+ "	    var products = getProducts();\r\n"
-					+ "	\r\n"
-					+ "	    if(products.length>0){\r\n"
-					+ "	        for(let i=0;i<products.length;i++){\r\n"
-					+ "	            var product = JSON.parse(products[i]);\r\n"
-					+ "	            if(product.Unit_Price<=price){\r\n"
-					+ "	                populateProduct(product.Category,product.Product_Name,product.Unit_Price,product.Active_Flag);\r\n"
-					+ "	            }\r\n"
-					+ "	        }\r\n"
-					+ "	    }\r\n"
 					+ "	}\r\n"
 					+ "	\r\n"
 					+ "	function filterByCategory(){\r\n"
 					+ "	\r\n"
 					+ "	}\r\n"
 					+ "	\r\n"
-					+ "	function searchProduct(search){\r\n"
-					+ "	    var productsDiv = document.getElementById(\"products-div\");\r\n"
-					+ "	    productsDiv.innerHTML = \"\";\r\n"
-					+ "	\r\n"
-					+ "	    var products = getProducts();\r\n"
-					+ "	\r\n"
-					+ "	    if(products.length>0){\r\n"
-					+ "	        for(let i=0;i<products.length;i++){\r\n"
-					+ "	            var product = JSON.parse(products[i]);\r\n"
-					+ "	            if(product.Product_Name==search){\r\n"
-					+ "	                populateProduct(product.Category,product.Product_Name,product.Unit_Price,product.Active_Flag);\r\n"
-					+ "	            }\r\n"
-					+ "	        }\r\n"
-					+ "	    }\r\n"
-					+ "	}\r\n"
 					+ "</script>\r\n"
 					+ "</html>");
+			int max = 0;
+			int min = 0;
+			
 			for(HashMap<String,String> map: products) {
 				if(Boolean.parseBoolean(map.get("ActiveFlag"))==true) {
-				out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+					if(Integer.parseInt(map.get("Product_Unit_Price"))>max) {
+						max = Integer.parseInt(map.get("Product_Unit_Price"));
+					}
+					out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+					out.append("\n<script>document.getElementById('price-range').setAttribute('max','"+max+"');document.getElementById('price-range').setAttribute('min','"+min+"');</script>");
+				}
+			}
+			
+			if(req.getParameter("search-input")!=null) {
+				out.append("<script>document.getElementById('products-div').innerHTML = '';</script>");
+				for(HashMap<String,String> map: products) {
+					if(map.get("Product_ID").equals(req.getParameter("search-input")) || map.get("Product_Name").equals(req.getParameter("search-input"))) {
+						out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+					}
+				}
+			}
+			
+			if(req.getParameter("categories")!=null) {
+				out.append("<script>document.getElementById('products-div').innerHTML = '';</script>");
+				String categories[] = req.getParameter("categories").split(",");
+				for(HashMap<String,String> map: products) {
+					for(String category: categories) {
+						if(!category.equals("") && category.equals(map.get("Product_Category"))) {
+							out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+						}
+					}
+				}
+			}
+			
+			if(req.getParameter("price-range")!=null && req.getParameter("constraint")!=null) {
+				out.append("<script>document.getElementById('products-div').innerHTML = '';</script>");
+				for(HashMap<String,String> map: products) {
+					switch(req.getParameter("constraint")) {
+						case ">": 
+								if(Integer.parseInt(map.get("Product_Unit_Price"))>Integer.parseInt(req.getParameter("price-range"))) {
+									out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+								}
+								break;
+						case "<": 
+								if(Integer.parseInt(map.get("Product_Unit_Price"))<Integer.parseInt(req.getParameter("price-range"))) {
+									out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+								}
+								break;
+						case "==": 
+								if(Integer.parseInt(map.get("Product_Unit_Price"))==Integer.parseInt(req.getParameter("price-range"))) {
+									out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+								}
+								break;
+						case ">=": 
+								if(Integer.parseInt(map.get("Product_Unit_Price"))>=Integer.parseInt(req.getParameter("price-range"))) {
+									out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+								}
+								break;
+						case "<=": 
+								if(Integer.parseInt(map.get("Product_Unit_Price"))<=Integer.parseInt(req.getParameter("price-range"))) {
+									out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
+								}
+								break;
+					}
 				}
 			}
 			
