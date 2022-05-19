@@ -14,7 +14,7 @@ public class AddCart extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String productId = req.getParameter("product");
 		try {
-			HomePageDAO.addToCart(productId);
+			HomePageDAO.addToCart(productId.split(";")[0],productId.split(";")[1]);
 			PrintWriter out = res.getWriter();
 			out.write("<script>alert('Product added to cart'); window.location.href = 'home';</script>");
 		} catch (SQLException e) {

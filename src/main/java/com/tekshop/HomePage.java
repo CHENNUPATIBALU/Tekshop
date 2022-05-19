@@ -15,13 +15,12 @@ public class HomePage extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		HomePageDAO hpd = new HomePageDAO();
+		HomePageDAO hpd = new HomePageDAO(res);
 		List<HashMap<String,String>> products;
 		try {
 			products = hpd.getProducts();
 			PrintWriter out = res.getWriter();
 			res.setContentType("text/html");
-			new HomePageDAO();
 			out.write("<!DOCTYPE html>\r\n"
 					+ "<html>\r\n"
 					+ "\r\n"
@@ -42,6 +41,7 @@ public class HomePage extends HttpServlet {
 					+ "		#top-div{\r\n"
 					+ "		    width: 100%;\r\n"
 					+ "		    text-align: center;\r\n"
+					+ "			display: none;\r\n"
 					+ "		}\r\n"
 					+ "		\r\n"
 					+ "		#search-div{\r\n"
@@ -108,18 +108,30 @@ public class HomePage extends HttpServlet {
 					+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\r\n"
 					+ "</head>\r\n"
 					+ "\r\n"
-					+ "<body>\r\n"
-					+ "	<!--<div id=\"login-div\">-->\r\n"
-					+ "        <!--<form action=\"login\" method=\"post\" id=\"login-form\">-->\r\n"
-					+ "            <!--<input type=\"email\" placeholder=\"Email*\" name=\"email\" required>-->\r\n"
-					+ "            <!--<input type=\"password\" placeholder=\"Password*\" name=\"password\" required>-->\r\n"
-					+ "            <!--<input type=\"submit\">-->\r\n"
-					+ "        <!--</form>-->\r\n"
-					+ "    <!--</div>-->\r\n"
+					+ "<body onload=\"checkLoginStatus();\">\r\n"
+					+ "	<div id=\"login-div\" style=\"width: max-content; text-align: center; margin: 0 auto; margin-top: 15%; display: block;\">\r\n"
+					+ "        <form action=\"login\" id=\"login-form\">\r\n"
+					+ "            <h2 style=\"font-size: xx-large; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\">Login</h2><br>\r\n"
+					+ "            <div id=\"error-div\" style=\"display: none; background-color: rgb(244, 114, 114); border-radius: 5px; width: max-content; text-align: center; margin: 0 auto;\">\r\n"
+					+ "                <div>\r\n"
+					+ "                    <a style=\"color: white; cursor: pointer;\" onclick=\"document.getElementById('error-div').style.display = 'none';\">&cross;</a>\r\n"
+					+ "                    <p id=\"error-p\" style=\"color: white; font-family: Verdana, Geneva, Tahoma, sans-serif;\"></p>\r\n"
+					+ "                </div>\r\n"
+					+ "            </div>\r\n"
+					+ "            <input type=\"email\" placeholder=\"Email*\" name=\"email\" required style=\"width: 300px; font-size: large; text-align:center; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin: 5px; margin: auto; display: block; border-radius: 5px; border: 0.5px solid grey; height: 40px;\"><br>\r\n"
+					+ "            <input type=\"password\" placeholder=\"Password*\" name=\"password\" required style=\"width: 300px; font-size: large; text-align:center; margin: 5px; margin: auto; display: block; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; border-radius: 5px; border: 0.5px solid grey; height: 40px;\">\r\n"
+					+ "            <a href=\"forgot-password.html\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: small; float: right;\">Forgot password?</a><br><br>\r\n"
+					+ "            <input type=\"submit\" value=\"Login\" style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: medium;border-radius: 5px; padding: 10px; border: 0.5px solid blueviolet; margin: 0 auto; display: block; cursor: pointer;\">\r\n"
+					+ "        </form>\r\n"
+					+ "        <a href=\"signup.html\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: small;\">Not having an account? Signup</a>\r\n"
+					+ " </div>"
 					+ "    <div id=\"top-div\">\r\n"
 					+ "        <div>\r\n"
 					+ "            <div onclick=\"openCart()\" style=\"float: right; margin: 15px; cursor: pointer;\">\r\n"
 					+ "                <span><i class=\"fa fa-shopping-cart\" style=\"color:rgb(120, 118, 224); font-size: xx-large;\"></i><sup id=\"cart-count\" style=\"background-color: grey; color: white; border-radius: 5px; padding-left: 3px; padding-right: 3px;\"></sup></span>\r\n"
+					+ "            </div>\r\n"
+					+ "            <div style=\"float: right; margin: 15px; cursor: pointer;\">\r\n"
+					+ "                <span><dfn><abbr id=\"user-name\"><i class=\"fa fa-user\" style=\"color:rgb(120, 118, 224); font-size: xx-large;\"></i></abbr></dfn></span>\r\n"
 					+ "            </div>\r\n"
 					+ "            <h1>TekShop</h1>\r\n"
 					+ "        </div>\r\n"
@@ -201,6 +213,7 @@ public class HomePage extends HttpServlet {
 					+ " document.getElementById('cat-form').onsubmit = function(e){"
 					+ "		document.getElementById('products-div').innerHTML = '';\r\n"
 					+ "};\r\n"
+					+ "document.getElementById('user-name').title = 'User: '+localStorage.getItem('user_id');"
 					+ "	\r\n"
 					+ "	document.getElementById(\"search-btn\").addEventListener('click',function(){\r\n"
 					+ "	    var searchInput = document.getElementById('search-input').value;\r\n"
@@ -212,6 +225,19 @@ public class HomePage extends HttpServlet {
 					+ "	function openCart(){\r\n"
 					+ "	    window.location.href = \"cart.html\";\r\n"
 					+ "	}\r\n"
+					+ "\r\n"
+					+ "	function checkLoginStatus(){\r\n"
+					+ "		if(localStorage.getItem('user_id')!=null){\r\n"
+					+ "			document.getElementById('top-div').style.display = 'block';\r\n"
+					+ "			document.getElementById('root-div').style.display = 'flex';\r\n"
+					+ "			document.getElementById('login-div').style.display = 'none';\r\n"
+					+ "		}\r\n"
+					+ "		else{\r\n"
+					+ "			document.getElementById('top-div').style.display = 'none';\r\n"
+					+ "			document.getElementById('root-div').style.display = 'none';\r\n"
+					+ "			document.getElementById('login-div').style.display = 'block';\r\n"
+					+ "		}\r\n"
+					+ " }\r\n"
 					+ "	\r\n"
 					+ "	function populateProduct(prod_id,image,category,prod_name,prod_price){\r\n"
 					+ "		document.getElementById('root-div').style.display = 'flex';\r\n"
@@ -275,7 +301,7 @@ public class HomePage extends HttpServlet {
 					+ "	        purchaseForm.setAttribute('action','AddCart');\r\n"
 					+ "			purchaseForm.setAttribute('method','post');\r\n"
 					+ "			var purchaseInput = document.createElement('input')\r\n"
-					+ "			purchaseInput.value = prod_id;\r\n"
+					+ "			purchaseInput.value = prod_id+';'+localStorage.getItem('user_id');\r\n"
 					+ "			purchaseInput.name = \"product\"\r\n"
 					+ "			purchaseInput.setAttribute('type','hidden');\r\n"
 					+ "	        purchaseForm.appendChild(purchaseInput);\r\n"
@@ -348,14 +374,15 @@ public class HomePage extends HttpServlet {
 					+ "	\r\n"
 					+ "</script>\r\n"
 					+ "</html>");
+			
 			int max = 0;
 			int min = 0;
-			
 			for(HashMap<String,String> map: products) {
 				if(Boolean.parseBoolean(map.get("ActiveFlag"))==true) {
 					if(Integer.parseInt(map.get("Product_Unit_Price"))>max) {
 						max = Integer.parseInt(map.get("Product_Unit_Price"));
 					}
+					
 					out.append("\n<script>populateProduct('"+map.get("Product_ID")+"','"+map.get("Product_Image")+"','"+map.get("Product_Category")+"','"+map.get("Product_Name")+"','"+map.get("Product_Unit_Price")+"');</script>");
 					out.append("\n<script>document.getElementById('price-range').setAttribute('max','"+max+"');document.getElementById('price-range').setAttribute('min','"+min+"');</script>");
 				}

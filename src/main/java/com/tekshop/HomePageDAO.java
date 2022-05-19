@@ -15,9 +15,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 public class HomePageDAO {
 	
 	static Connection con;
+	static HttpServletResponse res;
+	
+	public HomePageDAO(HttpServletResponse res) {
+		this.res = res;
+	}
 	
 	public List<HashMap<String, String>> getProducts() throws Exception{
 		List<HashMap<String,String>> products = new ArrayList<HashMap<String,String>>();
@@ -42,21 +50,8 @@ public class HomePageDAO {
 			map.put("Product_Price_Currency", rs.getString(12));
 			map.put("Product_Inventory_Threshold", rs.getString(13));
 			Blob img = rs.getBlob(14);
-			InputStream in = img.getBinaryStream();
-			byte[] buffer = new byte[1024];
-			int length = (int) img.length();
-			OutputStream out = new OutputStream() {
-				
-				@Override
-				public void write(int b) throws IOException {
-					// TODO Auto-generated method stub
-					
-				}
-			};
-			while((length=in.read(buffer)) !=-1) {
-				out.write(buffer, 0, length);
-			}
-			map.put("Product_Image", out.toString());
+            byte byteArray[] = img.getBytes(1, (int) img.length());
+			map.put("Product_Image", byteArray.toString());
 			map.put("ActiveFlag",rs.getBoolean(15)+"");
 			
 			products.add(map);
@@ -65,13 +60,13 @@ public class HomePageDAO {
 		return products;
 	}
 	
-	public static void addToCart(String productID) throws SQLException {
+	public static void addToCart(String productID, String cusId) throws SQLException {
 		String query = "insert into cart_table values(?,?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(query);
 		Timestamp cartTimeStamp = new Timestamp(System.currentTimeMillis());
 		String cartId = String.format("c_%s%s%s", cartTimeStamp.getHours(),cartTimeStamp.getMinutes(),cartTimeStamp.getSeconds());
 		int selectedUnits = 1;
-		String customerID = "cus_123";
+		String customerID = cusId;
 		ps.setString(1, cartId);
 		ps.setString(2, cartTimeStamp+"");
 		ps.setString(3, productID);

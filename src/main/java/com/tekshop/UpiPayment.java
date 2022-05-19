@@ -20,7 +20,7 @@ public class UpiPayment extends HttpServlet {
 		String upiId = req.getParameter("upi-id");
 		String delMethod = req.getParameter("delivery-type");
 		String delInstructions = req.getParameter("del-instructions");
-		//String discountID = req.getParameter("discountID");
+		String cusId = req.getParameter("cus_id");
 		String purchaseID = generatePurchaseID();
 		PrintWriter out = res.getWriter();
 		
@@ -28,7 +28,7 @@ public class UpiPayment extends HttpServlet {
 		try {
 			dao = new CheckoutDAO();
 			//int amount = Integer.parseInt(finalAmount)-(Integer.parseInt(finalAmount)*(dao.getDiscountPercentage("first_10")/10));
-			dao.addToPurchase("upi", finalAmount, "first_10", finalAmount, purchaseID, delMethod, delInstructions);
+			dao.addToPurchase(cusId, "upi", finalAmount, "first_10", finalAmount, purchaseID, delMethod, delInstructions);
 			out.write("<script>window.location.href='order-success.html';</script>");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

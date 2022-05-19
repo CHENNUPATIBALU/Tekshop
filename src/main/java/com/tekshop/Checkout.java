@@ -122,6 +122,7 @@ public class Checkout extends HttpServlet{
 				+ "                        <td>\r\n"
 				+ "                            <span><b>CVV</b></span><br>\r\n"
 				+ "                            <input type=\"tel\" minlength=\"3\" maxlength=\"4\" id=\"cvv\" name=\"cvv\">\r\n"
+				+ "				   				<input type='hidden' name='cus_id' id='card-cus-id-input'>\r\n"
 				+ "                        </td>\r\n"
 				+ "                    </tr>\r\n"
 				+ "                </table>\r\n"
@@ -154,6 +155,7 @@ public class Checkout extends HttpServlet{
 				+ "            <form action=\"UpiPayment\" id=\"upi-form\" method=\"post\">\r\n"
 				+ "                <span><b>Enter UPI ID</b></span><br>\r\n"
 				+ "				   <input type='hidden' name='amount' id='upi-amount-input'>\r\n"
+				+ "				   <input type='hidden' name='cus_id' id='upi-cus-id-input'>\r\n"
 				+ "                <input name=\"upi-id\" type=\"email\" id=\"upi-id\" name=\"upi-id\"><br><br>\r\n"
 				+ "				   <br>\r\n"
 				+ "        <div>\r\n"
@@ -184,6 +186,8 @@ public class Checkout extends HttpServlet{
 				+ "<script>\r\n"
 				+ "    var cardNumber = document.getElementById('card-number');\r\n"
 				+ "    var expiry = document.getElementById('expiry-date');\r\n"
+				+ "	   document.getElementById('card-amount-input').value="+amount+";\r\n"
+				+ "	   document.getElementById('card-cus-id-input').value = localStorage.getItem('user_id');\r\n"
 				+ "    var cvv = document.getElementById('cvv');\r\n"
 				+ "\r\n"
 				+ "    cardNumber.addEventListener('keyup',function(){\r\n"
@@ -234,12 +238,14 @@ public class Checkout extends HttpServlet{
 				+ "        document.getElementById('card-div').style.display = 'block';\r\n"
 				+ "        document.getElementById('upi-div').style.display = 'none';\r\n"
 				+ "	   	   document.getElementById('card-amount-input').value="+amount+";\r\n"
+				+ "			document.getElementById('card-cus-id-input').value = localStorage.getItem('user_id');\r\n"
 				+ "    }\r\n"
 				+ "    \r\n"
 				+ "    function showUpiDiv(){\r\n"
 				+ "        document.getElementById('card-div').style.display = 'none';\r\n"
 				+ "        document.getElementById('upi-div').style.display = 'block';\r\n"
 				+ "	       document.getElementById('upi-amount-input').value="+amount+";\r\n"
+				+ "			document.getElementById('upi-cus-id-input').value = localStorage.getItem('user_id');\r\n"
 				+ "    }\r\n"
 				+ "    \r\n"
 				+ "    function openUpi(){\r\n"
@@ -254,7 +260,5 @@ public class Checkout extends HttpServlet{
 				+ "</script>\r\n"
 				+ "</html>");
 		out.append("<script>document.getElementById('total-bill-span').innerText='₹ "+amount+"/-';</script>");
-//		out.append("<script>document.getElementById('card-form').onsubmit = CardPayment</script>");
-//		out.append("<script>document.getElementById('upi-form').onsubmit = UpiPayment;</script>");
 	}
 }

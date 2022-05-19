@@ -19,13 +19,13 @@ public class CheckoutDAO {
 		con = DriverManager.getConnection(DAO.url, DAO.userName, DAO.password);
 	}
 	
-	public void addToPurchase(String paymentMethod, String totalAmount, String discountID, String finalAmount, String purchaseID, String delMethod, String delInstructions) throws SQLException {
+	public void addToPurchase(String cusId, String paymentMethod, String totalAmount, String discountID, String finalAmount, String purchaseID, String delMethod, String delInstructions) throws SQLException {
 		List<HashMap<String,String>> cartItems = cartItems();
 		Iterator<HashMap<String, String>> cartIterator = cartItems.iterator();
 		
 		PreparedStatement ps1 = con.prepareStatement("insert into purchase_table values(?,?,?,?,?,?)");
 		ps1.setString(1, purchaseID);
-		ps1.setString(2, "cus_123");
+		ps1.setString(2, cusId);
 		ps1.setString(3, paymentMethod);
 		ps1.setInt(4, Integer.parseInt(totalAmount));
 		ps1.setString(5, discountID);
