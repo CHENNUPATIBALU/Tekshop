@@ -10,9 +10,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-/**
- * Servlet implementation class CardPayment
- */
 public class CardPayment extends HttpServlet {
 	
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -23,7 +20,6 @@ public class CardPayment extends HttpServlet {
 		String delMethod = req.getParameter("delivery-type");
 		String delInstructions = req.getParameter("del-instructions");
 		String cusId = req.getParameter("cus_id");
-		System.out.println(cusId);
 		String purchaseID = generatePurchaseID();
 		PrintWriter out = res.getWriter();
 		
