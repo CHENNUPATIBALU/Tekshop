@@ -198,7 +198,7 @@ public class ViewProduct extends HttpServlet{
 					+ "    </script>"
 					+ "</html>");
 			while(rs.next()) {
-				out.append("<script>showProduct('"+rs.getString(1)+"','"+rs.getString(2)+"','"+rs.getString(3)+"','"+rs.getString(4)+"','"+rs.getString(4)+"')</script>");
+				out.append("<script>showProduct('"+rs.getString(1)+"','"+rs.getString(2)+"','"+rs.getString(3)+"',\""+rs.getString(4)+"\",\""+rs.getString(4)+"\")</script>");
 			}
 			out.append("<script>document.getElementById('check-delivery-form').onsubmit = function(e){"
 					+ "		e.preventDefault();\r\ncalculateDistance();\r\n"

@@ -21,10 +21,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class HomePageDAO {
 	
 	static Connection con;
-	static HttpServletResponse res;
+	HttpServletResponse res;
 	
 	public HomePageDAO(HttpServletResponse res) {
 		this.res = res;
+	}
+	
+	public HomePageDAO() {
+		
 	}
 	
 	public List<HashMap<String, String>> getProducts() throws Exception{

@@ -11,6 +11,10 @@ public class ProductUpdateDAO {
 	boolean activeFlag;
 	static Connection con;
 	
+	public ProductUpdateDAO() throws Exception {
+		makeConnection(DAO.driverType, DAO.url, DAO.userName, DAO.password);
+	}
+	
 	public ProductUpdateDAO(String productName, String productInventory, String productPrice, String productCategory, boolean activeFlag) throws Exception {
 		this.productName = productName;
 		this.productInventory = productInventory;
@@ -45,5 +49,12 @@ public class ProductUpdateDAO {
 		ps.execute();
 		
 		return null;
+	}
+	
+	public void updateInventory(String prodId, int inventory) throws SQLException {
+		String query = "update products set product_inventory_level=? where product_id='"+prodId+"'";
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setString(1, inventory+"");
+		ps.execute();
 	}
 }
