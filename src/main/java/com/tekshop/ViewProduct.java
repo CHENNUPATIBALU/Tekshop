@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.tekshop.*;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +23,7 @@ public class ViewProduct extends HttpServlet{
 		
 		ResultSet rs;
 		try {
-			rs = ViewProductDAO.getProduct(productId);
+			rs = new ViewProductDAO().getProduct(productId);
 			
 			PrintWriter out = res.getWriter();
 			res.setContentType("text/html");
@@ -153,16 +154,18 @@ public class ViewProduct extends HttpServlet{
 					+ "                }\r\n"
 					+ "            }\r\n"
 					+ "    }\r\n"
+					+ "\r\n"
+					+ "\r\n"
 					+ "		function getDeliveryDate(duration_text){\r\n"
 					+ "        var duration = duration_text.split(\" \");\r\n"
 					+ "        var date = new Date();\r\n"
-					+ "        var delDate = date.getDate();\r\n"
+					+ "        var delDate = date.getDate()+1;\r\n"
 					+ "        var delMonth = date.getMonth()+1;\r\n"
 					+ "        var delYear = date.getFullYear();\r\n"
 					+ "        \r\n"
 					+ "        switch(duration[1]){\r\n"
-					+ "          case 'day' || 'hour' || 'hours': \r\n"
-					+ "              delDate = date.getDate()+1;\r\n"
+					+ "          case 'day': \r\n"
+					+ "              delDate = date.getDate()+2;\r\n"
 					+ "              delMonth = date.getMonth()+1;\r\n"
 					+ "              delYear = date.getFullYear();\r\n"
 					+ "              break;\r\n"
@@ -207,19 +210,4 @@ public class ViewProduct extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
-}
-
-class ViewProductDAO{
-	
-	static ResultSet getProduct(String productId) throws SQLException, ClassNotFoundException{
-		String query = "select product_category,product_name,product_unit_price,product_description,product_id from products where product_id='"+productId+"'";
-		
-		Class.forName(DAO.driverType);
-		Connection con = DriverManager.getConnection(DAO.url, DAO.userName, DAO.password);
-		Statement ps = con.createStatement();
-		ResultSet rs = ps.executeQuery(query);
-		
-		return rs;
-	}
-		
 }

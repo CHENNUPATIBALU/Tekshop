@@ -23,7 +23,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ViewProduct</servlet-name>
-    <url-pattern>/view-product-details.html</url-pattern>
+    <url-pattern>/ViewProduct</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ProductUpdate</servlet-name>
