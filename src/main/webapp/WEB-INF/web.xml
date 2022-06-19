@@ -131,7 +131,6 @@
     <servlet-name>updateInventory</servlet-name>
     <url-pattern>/updateInventory</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>orders</display-name>
@@ -141,5 +140,15 @@
   <servlet-mapping>
     <servlet-name>orders</servlet-name>
     <url-pattern>/orders</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>forgot</display-name>
+    <servlet-name>forgot</servlet-name>
+    <servlet-class>com.tekshop.forgot</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>forgot</servlet-name>
+    <url-pattern>/forgot</url-pattern>
   </servlet-mapping>
 </web-app>

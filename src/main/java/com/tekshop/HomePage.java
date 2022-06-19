@@ -126,7 +126,7 @@ public class HomePage extends HttpServlet {
 					+ "            </div>\r\n"
 					+ "            <input type=\"email\" placeholder=\"Email*\" name=\"email\" required style=\"width: 300px; font-size: large; text-align:center; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin: 5px; margin: auto; display: block; border-radius: 5px; border: 0.5px solid grey; height: 40px;\"><br>\r\n"
 					+ "            <input type=\"password\" placeholder=\"Password*\" name=\"password\" required style=\"width: 300px; font-size: large; text-align:center; margin: 5px; margin: auto; display: block; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; border-radius: 5px; border: 0.5px solid grey; height: 40px;\">\r\n"
-					+ "            <a href=\"forgot-password.html\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: small; float: right;\">Forgot password?</a><br><br>\r\n"
+					+ "            <a href=\"forgot\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: small; float: right;\">Forgot password?</a><br><br>\r\n"
 					+ "            <input type=\"submit\" value=\"Login\" style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: medium;border-radius: 5px; padding: 10px; border: 0.5px solid blueviolet; margin: 0 auto; display: block; cursor: pointer;\">\r\n"
 					+ "        </form>\r\n"
 					+ "        <a href=\"signup.html\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: small;\">Not having an account? Signup</a>\r\n"
