@@ -27,7 +27,6 @@ public class UpiPayment extends HttpServlet {
 		CheckoutDAO dao;
 		try {
 			dao = new CheckoutDAO();
-			//int amount = Integer.parseInt(finalAmount)-(Integer.parseInt(finalAmount)*(dao.getDiscountPercentage("first_10")/10));
 			dao.addToPurchase(cusId, "upi", finalAmount, "first_10", finalAmount, purchaseID, delMethod, delInstructions);
 			out.write("<script>window.location.href='order-success.html';</script>");
 		} catch (ClassNotFoundException | SQLException e) {

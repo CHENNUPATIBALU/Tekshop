@@ -23,9 +23,6 @@ public class HomePageDAO {
 	static Connection con;
 	HttpServletResponse res;
 	
-	public HomePageDAO(HttpServletResponse res) {
-		this.res = res;
-	}
 	
 	public HomePageDAO() {
 		

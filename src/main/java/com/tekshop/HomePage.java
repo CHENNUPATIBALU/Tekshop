@@ -2,6 +2,7 @@ package com.tekshop;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class HomePage extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		HomePageDAO hpd = new HomePageDAO(res);
+		HomePageDAO hpd = new HomePageDAO();
 		List<HashMap<String,String>> products;
 		try {
 			products = hpd.getProducts();
@@ -110,7 +111,7 @@ public class HomePage extends HttpServlet {
 					+ "		    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;\r\n"
 					+ "		}\r\n"
 					+ "    </style>\r\n"
-					+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\r\n"
+					+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css\">\r\n"
 					+ "</head>\r\n"
 					+ "\r\n"
 					+ "<body>\r\n"
@@ -124,17 +125,22 @@ public class HomePage extends HttpServlet {
 					+ "                </div>\r\n"
 					+ "            </div>\r\n"
 					+ "            <input type=\"email\" placeholder=\"Email*\" name=\"email\" required style=\"width: 300px; font-size: large; text-align:center; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin: 5px; margin: auto; display: block; border-radius: 5px; border: 0.5px solid grey; height: 40px;\"><br>\r\n"
-					+ "            <input type=\"password\" placeholder=\"Password*\" name=\"password\" required style=\"width: 300px; font-size: large; text-align:center; margin: 5px; margin: auto; display: block; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; border-radius: 5px; border: 0.5px solid grey; height: 40px;\"><br>\r\n"
+					+ "            <input type=\"password\" placeholder=\"Password*\" name=\"password\" required style=\"width: 300px; font-size: large; text-align:center; margin: 5px; margin: auto; display: block; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; border-radius: 5px; border: 0.5px solid grey; height: 40px;\">\r\n"
+					+ "            <a href=\"forgot-password.html\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: small; float: right;\">Forgot password?</a><br><br>\r\n"
 					+ "            <input type=\"submit\" value=\"Login\" style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: medium;border-radius: 5px; padding: 10px; border: 0.5px solid blueviolet; margin: 0 auto; display: block; cursor: pointer;\">\r\n"
 					+ "        </form>\r\n"
+					+ "        <a href=\"signup.html\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: small;\">Not having an account? Signup</a>\r\n"
 					+ " </div>"
 					+ "    <div id=\"top-div\">\r\n"
 					+ "        <div>\r\n"
 					+ "            <div onclick=\"openCart()\" style=\"float: right; margin: 15px; cursor: pointer;\">\r\n"
-					+ "                <span><i class=\"fa fa-shopping-cart\" style=\"color:rgb(120, 118, 224); font-size: xx-large;\"></i><sup id=\"cart-count\" style=\"background-color: grey; color: white; border-radius: 5px; padding-left: 3px; padding-right: 3px;\"></sup></span>\r\n"
+					+ "                <span><i class=\"fas fa-shopping-cart\" style=\"color:rgb(120, 118, 224); font-size: xx-large;\"></i><sup id=\"cart-count\" style=\"background-color: grey; color: white; border-radius: 5px; padding-left: 3px; padding-right: 3px;\"></sup></span>\r\n"
+					+ "            </div>\r\n"
+					+ "            <div onclick=\"openOrders()\" style=\"float: right; margin: 15px; cursor: pointer;\">\r\n"
+					+ "                <span><dfn><abbr title=\"Your orders\"><i class=\"fas fa-shopping-bag\" style=\"color:rgb(120, 118, 224); font-size: xx-large;\"></i></abbr></dfn></span>\r\n"
 					+ "            </div>\r\n"
 					+ "            <div style=\"float: right; margin: 15px; cursor: pointer;\" onclick=\"logout();\">\r\n"
-					+ "                <span><dfn><abbr id=\"user-name\"><i class=\"fa fa-user\" style=\"color:rgb(120, 118, 224); font-size: xx-large;\"></i></abbr></dfn></span>\r\n"
+					+ "                <span><dfn><abbr id=\"user-name\"><i class=\"fas fa-user\" style=\"color:rgb(120, 118, 224); font-size: xx-large;\"></i></abbr></dfn></span>\r\n"
 					+ "            </div>\r\n"
 					+ "            <h1>TekShop</h1>\r\n"
 					+ "        </div>\r\n"
@@ -219,6 +225,7 @@ public class HomePage extends HttpServlet {
 					+ "function logout(){\r\n"
 					+ "		if(confirm('Are you sure to logout from this site?')){\r\n"
 					+ "			localStorage.removeItem('user_id'); location.reload();\r\n"
+					+ "			document.cookie = \"user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;\";"
 					+ "		}\r\n"
 					+ "}\r\n"
 					+ " document.getElementById('price-form').onsubmit = function(e){"
@@ -240,6 +247,9 @@ public class HomePage extends HttpServlet {
 					+ "	\r\n"
 					+ "	function openCart(){\r\n"
 					+ "	    window.location.href = \"cart\";\r\n"
+					+ "	}\r\n"
+					+ "	function openOrders(){\r\n"
+					+ "	    window.location.href = \"orders\";\r\n"
 					+ "	}\r\n"
 					+ "\r\n"
 					+ "		if(localStorage.getItem('user_id')!=null){\r\n"
@@ -349,7 +359,8 @@ public class HomePage extends HttpServlet {
 					+ "	\r\n"
 					+ "	        purchase_btn.addEventListener('mouseout',function(){\r\n"
 					+ "	           purchase_btn.style = 'box-shadow: none; cursor: pointer; border: 0.5px solid blue; border-radius: 3px; background-color:blue; color: white; margin: 5px';\r\n"
-					+ "	        });\r\n"
+					+ "	        });\r"
+					+ "\n"
 					+ "	        purchaseForm.addEventListener('onsubmit',function(){\r\n"
 					+ "				\r\n"
 					+ "	        });\r\n"
@@ -476,5 +487,19 @@ public class HomePage extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static boolean logout(HttpServletRequest req, HttpServletResponse res) {
+		Cookie[] cookies = req.getCookies();
+		if(cookies!=null) {
+			for(Cookie cookie:cookies) {
+				if(cookie.getName().equals("user_id")) {
+					cookie.setMaxAge(0);
+					res.addCookie(cookie);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

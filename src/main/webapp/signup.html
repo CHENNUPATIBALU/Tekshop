@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        h2{
+            text-align: center;
+            font-size: xx-large;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        td{
+            width: max-content;
+            text-align: center;
+            padding: 5px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: larger;
+        }
+        td input{
+            height: 30px;
+            font-size: medium;
+        }
+        td select{
+            height: 30px;
+            width: 205px;
+            font-size: small;
+        }
+        #signup-btn{
+            margin: 0 auto;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0.2px solid grey;
+            box-shadow: 1px 1px 0.5px grey;
+            cursor: pointer;
+            font-size: medium;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="signup-form" style="width: max-content; margin: 0 auto; box-shadow: 1px 1px 1.5px 0.5px grey;; display: block; background-color: #eaeaff; border-radius: 8px; padding: 20px;">
+        <form action="Signup" method="post">
+            <h2>Create Account</h2>
+            <table>
+                <tr>
+                    <td>First name</td>
+                    <td>
+                        <input type="text" name="first-name" required oninvalid="this.setCustomValidity('Enter your first name')" oninput="this.setCustomValidity('')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Last name</td>
+                    <td>
+                        <input type="text" name="last-name" required oninvalid="this.setCustomValidity('Enter your last name')" oninput="this.setCustomValidity('')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mobile number</td>
+                    <td>
+                        <input type="phone" name="mobile" required oninvalid="this.setCustomValidity('Enter your mobile number')" oninput="this.setCustomValidity('')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>
+                        <input type="email" name="email" required oninvalid="this.setCustomValidity('Enter your email')" oninput="this.setCustomValidity('')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td>
+                        <input id="password" type="password" name="password" style="position: relative; z-index: 0;" required oninvalid="this.setCustomValidity('Enter the password')" oninput="this.setCustomValidity('')">
+                        <i id="eye-icon" style="font-size: medium; cursor: pointer; width: max-content; position: relative; z-index: 1; top: 0; right: 35px; border-radius: 20px; padding: 0px; border: none;" class="fas fa-eye-slash"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Security question</td>
+                    <td>
+                        <select name="security-question" required>
+                            <option value="In what city were you born?">In what city were you born?</option>
+                            <option value="What is the name of your favorite pet?">What is the name of your favorite pet?</option>
+                            <option value="What is the name of your first school?">What is the name of your first school?</option>
+                            <option value="What was your favorite food as a child?">What was your favorite food as a child?</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Answer</td>
+                    <td>
+                        <input type="text" name="answer" required oninvalid="this.setCustomValidity('Enter the security question answer')" oninput="this.setCustomValidity('')">
+                    </td>
+                </tr>
+            </table>
+            <input id="signup-btn" type="submit" value="Signup">
+        </form>
+    </div>
+</body>
+<script>
+    var passHide = true;
+    document.getElementById('eye-icon').addEventListener('click', function (e){
+        if(passHide){
+            passHide = false;
+            document.getElementById('password').setAttribute('type','text');
+            document.getElementById('eye-icon').classList.remove('fa-eye-slash');
+            document.getElementById('eye-icon').classList.add('fa-eye');
+            e.preventDefault();
+        }else{
+            passHide = true;
+            document.getElementById('password').setAttribute('type','password');
+            document.getElementById('eye-icon').classList.remove('fa-eye');
+            document.getElementById('eye-icon').classList.add('fa-eye-slash');
+            e.preventDefault();
+        }
+    });
+</script>
+</html>

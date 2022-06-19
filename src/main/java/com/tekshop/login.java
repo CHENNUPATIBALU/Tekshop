@@ -2,6 +2,7 @@ package com.tekshop;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +23,15 @@ public class login extends HttpServlet {
 			dao = new LoginDAO(email, password);
 			userID = dao.checkUser();
 			if(userID!=null) {
-				out.append("<script>localStorage.setItem('user_id','"+userID+"');window.location.href = 'home';</script>");
+				out.append("<script>\r\n"
+						+ "function setCookie(cname, cvalue, exdays) {\r\n"
+						+ "  const d = new Date();\r\n"
+						+ "  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));\r\n"
+						+ "  let expires = \"expires=\"+d.toUTCString();\r\n"
+						+ "  document.cookie = cname + \"=\" + cvalue + \";\" + expires + \";path=/\";\r\n"
+						+ "	 window.location.href='home'; \r\n"
+						+ "}\r\n"
+						+ "localStorage.setItem('user_id','"+userID+"'); setCookie('user_id','"+userID+"',1);</script>");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

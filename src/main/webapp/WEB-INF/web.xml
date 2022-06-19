@@ -14,7 +14,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>HomePage</servlet-name>
-    <url-pattern>/index.html</url-pattern>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
   <servlet>
@@ -106,6 +105,14 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>signup</servlet-name>
+    <servlet-class>com.tekshop.Signup</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>signup</servlet-name>
+    <url-pattern>/Signup</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <description></description>
     <display-name>merchant</display-name>
     <servlet-name>merchant</servlet-name>
@@ -116,7 +123,6 @@
     <url-pattern>/merchant</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
     <display-name>updateInventory</display-name>
     <servlet-name>updateInventory</servlet-name>
     <servlet-class>com.tekshop.updateInventory</servlet-class>
@@ -124,5 +130,16 @@
   <servlet-mapping>
     <servlet-name>updateInventory</servlet-name>
     <url-pattern>/updateInventory</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <description></description>
+    <display-name>orders</display-name>
+    <servlet-name>orders</servlet-name>
+    <servlet-class>com.tekshop.orders</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>orders</servlet-name>
+    <url-pattern>/orders</url-pattern>
   </servlet-mapping>
 </web-app>
