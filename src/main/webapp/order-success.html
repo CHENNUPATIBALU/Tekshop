@@ -5,9 +5,30 @@
 <title>Order placed</title>
 <style>
 #order-success{
+   width: max-content;
+   margin: 0 auto;
    text-align: center;
    font-family: sans-serif;
    font-size: large;
+}
+button{
+	padding: 10px;
+	border-radius: 8px;
+	border: 0.5px solid grey;
+	background-color:white;
+	font-weight: bold;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	cursor: pointer;
+}
+button:hover{
+	padding: 10px;
+	border-radius: 8px;
+	border: 0.5px solid grey;
+	background-color:blue;
+	color: white;
+	font-weight: bold;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -15,6 +36,7 @@
 	<div id="order-success">
         <img src="https://res.cloudinary.com/chennupati-balu/image/upload/v1652263757/Tekshop/success1_lduk9l.gif" alt="payment_success">
         <p><b>Your order has been placed successfully</b></p>
+        <button onclick="window.location.href='orders';">View your orders</button>
     </div>
 </body>
 </html>

@@ -32,6 +32,8 @@ public class login extends HttpServlet {
 						+ "	 window.location.href='home'; \r\n"
 						+ "}\r\n"
 						+ "localStorage.setItem('user_id','"+userID+"'); setCookie('user_id','"+userID+"',1);</script>");
+			}else {
+				out.append("<script>alert('User doesn't exists. Please try again!'); window.location.href = 'home';</script>");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
